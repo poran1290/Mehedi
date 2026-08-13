@@ -1,0 +1,2352 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>📚 কোর্স স্টোর</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #7C3AED;
+            --primary-light: #A78BFA;
+            --primary-dark: #5B21B6;
+            --secondary: #EC4899;
+            --secondary-light: #F472B6;
+            --accent: #06B6D4;
+            --accent2: #10B981;
+            --bg: #0A0A1A;
+            --bg2: #111128;
+            --card-bg: #1A1A35;
+            --card-bg2: #222245;
+            --card-bg3: #16163A;
+            --text: #FFFFFF;
+            --text-secondary: #9CA3AF;
+            --text-muted: #6B7280;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --bkash: #E2136E;
+            --nagad: #F6921E;
+            --glow-primary: rgba(124, 58, 237, 0.3);
+            --glow-secondary: rgba(236, 72, 153, 0.3);
+            --glow-accent: rgba(6, 182, 212, 0.3);
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: 80px;
+        }
+
+        /* ============ ANIMATED BACKGROUND ============ */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 20% 50%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 50%, rgba(236, 72, 153, 0.06) 0%, transparent 50%),
+                        radial-gradient(ellipse at 50% 100%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
+            z-index: -1;
+            animation: bgFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes bgFloat {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(2%, -2%) rotate(1deg); }
+            66% { transform: translate(-1%, 1%) rotate(-1deg); }
+        }
+
+        /* ============ HEADER ============ */
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease infinite;
+            padding: 25px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 5px;
+            position: relative;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 13px;
+            opacity: 0.9;
+            position: relative;
+        }
+
+        .header-decoration {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            top: -30px;
+            right: -20px;
+        }
+
+        .header-decoration2 {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            bottom: -15px;
+            left: 20px;
+        }
+
+        /* ============ BOTTOM NAV ============ */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg2);
+            border-top: 1px solid rgba(124, 58, 237, 0.2);
+            display: flex;
+            z-index: 100;
+            padding: 5px 0;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 -5px 30px rgba(0,0,0,0.5);
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            border-radius: 12px;
+            margin: 3px;
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(236, 72, 153, 0.1));
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 0 0 5px 5px;
+        }
+
+        .nav-icon {
+            font-size: 22px;
+            margin-bottom: 3px;
+            transition: transform 0.3s;
+        }
+
+        .nav-item.active .nav-icon {
+            transform: scale(1.15);
+        }
+
+        .nav-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+
+        .nav-item.active .nav-label {
+            color: var(--primary-light);
+            font-weight: 700;
+        }
+
+        .nav-badge {
+            position: absolute;
+            top: 2px;
+            right: 50%;
+            transform: translateX(12px);
+            background: var(--danger);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 1px 5px;
+            border-radius: 10px;
+            min-width: 16px;
+            text-align: center;
+        }
+
+        /* ============ PAGES ============ */
+        .page {
+            display: none;
+            padding: 15px;
+            animation: pageIn 0.4s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes pageIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============ COURSE CARDS ============ */
+        .section-title {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title .highlight {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .course-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(124, 58, 237, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .course-card:hover::before,
+        .course-card:active::before {
+            opacity: 1;
+        }
+
+        .course-card:active {
+            transform: scale(0.98);
+        }
+
+        .course-banner {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 55px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-banner::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(transparent, var(--card-bg));
+        }
+
+        .course-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 5px 12px;
+            border-radius: 25px;
+            font-size: 11px;
+            font-weight: 700;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 2;
+        }
+
+        .badge-popular {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.9), rgba(249, 115, 22, 0.9));
+        }
+
+        .badge-new {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(6, 182, 212, 0.9));
+        }
+
+        .badge-discount {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(236, 72, 153, 0.9));
+        }
+
+        .course-info {
+            padding: 16px;
+        }
+
+        .course-title {
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            background: linear-gradient(135deg, #fff, #e0e0e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .course-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .course-price {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .price-current {
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--success), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .price-old {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+
+        .course-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            color: var(--warning);
+        }
+
+        .course-features {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        .feature-tag {
+            background: rgba(124, 58, 237, 0.12);
+            color: var(--primary-light);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+            border: 1px solid rgba(124, 58, 237, 0.15);
+        }
+
+        .buy-btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+        }
+
+        .buy-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .buy-btn:hover::before {
+            left: 100%;
+        }
+
+        .buy-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* ============ SEARCH & FILTERS ============ */
+        .search-box {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 20px 14px 45px;
+            border-radius: 16px;
+            border: 1px solid rgba(124, 58, 237, 0.15);
+            background: var(--card-bg);
+            color: var(--text);
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--glow-primary);
+        }
+
+        .search-box::before {
+            content: '🔍';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+        }
+
+        .category-filters {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .category-filters::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cat-filter {
+            padding: 9px 18px;
+            border-radius: 25px;
+            border: 1px solid rgba(124, 58, 237, 0.15);
+            background: var(--card-bg);
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+
+        .cat-filter.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 15px var(--glow-primary);
+        }
+
+        /* ============ PROFILE PAGE ============ */
+        .profile-header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(236, 72, 153, 0.1));
+            border-radius: 24px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(124, 58, 237, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45px;
+            position: relative;
+            border: 3px solid rgba(255,255,255,0.2);
+            box-shadow: 0 8px 30px var(--glow-primary);
+            overflow: hidden;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .profile-online {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 16px;
+            height: 16px;
+            background: var(--success);
+            border-radius: 50%;
+            border: 3px solid var(--card-bg);
+        }
+
+        .profile-name {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 5px;
+            position: relative;
+        }
+
+        .profile-username {
+            font-size: 14px;
+            color: var(--primary-light);
+            margin-bottom: 5px;
+            position: relative;
+        }
+
+        .profile-id {
+            font-size: 12px;
+            color: var(--text-muted);
+            position: relative;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .profile-stat {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px 10px;
+            text-align: center;
+            border: 1px solid rgba(124, 58, 237, 0.1);
+        }
+
+        .profile-stat-number {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .profile-stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .profile-menu {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(124, 58, 237, 0.1);
+        }
+
+        .profile-menu-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .profile-menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .profile-menu-item:hover,
+        .profile-menu-item:active {
+            background: rgba(124, 58, 237, 0.08);
+        }
+
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-right: 14px;
+        }
+
+        .menu-text {
+            flex: 1;
+        }
+
+        .menu-text h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .menu-text p {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .menu-arrow {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* ============ MODAL ============ */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg2);
+            border-radius: 24px 24px 0 0;
+            width: 100%;
+            max-width: 500px;
+            max-height: 92vh;
+            overflow-y: auto;
+            animation: modalSlideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes modalSlideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .modal-handle {
+            width: 40px;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            margin: 12px auto;
+        }
+
+        .modal-header {
+            padding: 10px 20px 20px;
+            text-align: center;
+        }
+
+        .modal-header h2 {
+            font-size: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .modal-body {
+            padding: 0 20px 30px;
+        }
+
+        /* ============ PAYMENT SECTION ============ */
+        .payment-info-box {
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-info-box.bkash-box {
+            background: linear-gradient(135deg, rgba(226, 19, 110, 0.12), rgba(226, 19, 110, 0.05));
+            border: 1px solid rgba(226, 19, 110, 0.25);
+        }
+
+        .payment-info-box.nagad-box {
+            background: linear-gradient(135deg, rgba(246, 146, 30, 0.12), rgba(246, 146, 30, 0.05));
+            border: 1px solid rgba(246, 146, 30, 0.25);
+        }
+
+        .payment-info-box h3 {
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .payment-number {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--text);
+            margin: 10px 0;
+            letter-spacing: 2px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .copy-btn {
+            border: none;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .payment-method {
+            flex: 1;
+            padding: 18px 10px;
+            border-radius: 16px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid rgba(255,255,255,0.08);
+            transition: all 0.3s;
+            background: var(--card-bg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-method::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .payment-method.bkash::before {
+            background: linear-gradient(135deg, rgba(226, 19, 110, 0.1), transparent);
+        }
+
+        .payment-method.nagad::before {
+            background: linear-gradient(135deg, rgba(246, 146, 30, 0.1), transparent);
+        }
+
+        .payment-method.selected::before {
+            opacity: 1;
+        }
+
+        .payment-method.bkash.selected {
+            border-color: var(--bkash);
+            box-shadow: 0 0 20px rgba(226, 19, 110, 0.2);
+        }
+
+        .payment-method.nagad.selected {
+            border-color: var(--nagad);
+            box-shadow: 0 0 20px rgba(246, 146, 30, 0.2);
+        }
+
+        .payment-method-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .payment-method-name {
+            font-size: 14px;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .payment-method .check-mark {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--success);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .payment-method.selected .check-mark {
+            display: flex;
+        }
+
+        /* ============ FORM ============ */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(124, 58, 237, 0.15);
+            background: var(--card-bg);
+            color: var(--text);
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--glow-primary);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            color: white;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn.primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .submit-btn.success {
+            background: linear-gradient(135deg, var(--success), var(--accent));
+        }
+
+        .submit-btn.ghost {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.97);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* ============ ORDER CARDS ============ */
+        .order-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 18px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(124, 58, 237, 0.08);
+            transition: all 0.3s;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .order-id {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        .order-status {
+            padding: 5px 14px;
+            border-radius: 25px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+        }
+
+        .status-pending {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05));
+            color: var(--warning);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .status-approved {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .status-rejected {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .order-course-name {
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .order-details {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 2;
+        }
+
+        .download-btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            color: white;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            margin-top: 14px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px var(--glow-primary);
+        }
+
+        .download-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* ============ ADMIN ============ */
+        .admin-login-card {
+            max-width: 350px;
+            margin: 40px auto;
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(124, 58, 237, 0.1);
+        }
+
+        .admin-login-card .lock-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 18px;
+            text-align: center;
+            border: 1px solid rgba(124, 58, 237, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .stat-card:nth-child(1)::before { background: linear-gradient(90deg, var(--warning), var(--secondary)); }
+        .stat-card:nth-child(2)::before { background: linear-gradient(90deg, var(--success), var(--accent)); }
+        .stat-card:nth-child(3)::before { background: linear-gradient(90deg, var(--danger), var(--warning)); }
+        .stat-card:nth-child(4)::before { background: linear-gradient(90deg, var(--primary), var(--secondary)); }
+
+        .stat-number {
+            font-size: 26px;
+            font-weight: 900;
+        }
+
+        .stat-card:nth-child(1) .stat-number { color: var(--warning); }
+        .stat-card:nth-child(2) .stat-number { color: var(--success); }
+        .stat-card:nth-child(3) .stat-number { color: var(--danger); }
+        .stat-card:nth-child(4) .stat-number { color: var(--primary-light); }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        .admin-order-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 18px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(124, 58, 237, 0.08);
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .approve-btn, .reject-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .approve-btn {
+            background: linear-gradient(135deg, var(--success), #059669);
+        }
+
+        .reject-btn {
+            background: linear-gradient(135deg, var(--danger), #DC2626);
+        }
+
+        .approve-btn:active, .reject-btn:active {
+            transform: scale(0.95);
+        }
+
+        .link-input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(124, 58, 237, 0.15);
+            background: var(--card-bg3);
+            color: var(--text);
+            font-size: 13px;
+            margin-top: 12px;
+            outline: none;
+        }
+
+        .link-input:focus {
+            border-color: var(--primary);
+        }
+
+        /* ============ STEPS ============ */
+        .steps {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 18px;
+            left: 25%;
+            right: 25%;
+            height: 2px;
+            background: rgba(255,255,255,0.08);
+        }
+
+        .step {
+            text-align: center;
+            z-index: 1;
+        }
+
+        .step-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 2px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            font-size: 14px;
+            font-weight: 800;
+            transition: all 0.3s;
+        }
+
+        .step.active .step-circle {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-color: transparent;
+            box-shadow: 0 4px 15px var(--glow-primary);
+        }
+
+        .step.completed .step-circle {
+            background: linear-gradient(135deg, var(--success), var(--accent));
+            border-color: transparent;
+        }
+
+        .step-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .step.active .step-label {
+            color: var(--primary-light);
+        }
+
+        /* ============ INSTRUCTIONS ============ */
+        .instructions {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(245, 158, 11, 0.03));
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 18px;
+        }
+
+        .instructions h4 {
+            color: var(--warning);
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .instructions ol {
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            line-height: 1.6;
+        }
+
+        /* ============ EMPTY STATE ============ */
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .empty-state .icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .empty-state h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* ============ TOAST ============ */
+        .toast {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--card-bg2);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 600;
+            z-index: 2000;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+            animation: toastIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            white-space: nowrap;
+        }
+
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px) scale(0.9); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+        }
+
+        /* ============ WELCOME BANNER ============ */
+        .welcome-banner {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(236, 72, 153, 0.08));
+            border: 1px solid rgba(124, 58, 237, 0.15);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .welcome-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .welcome-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .welcome-text h3 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .welcome-text p {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 var(--glow-primary); }
+            70% { box-shadow: 0 0 0 10px transparent; }
+            100% { box-shadow: 0 0 0 0 transparent; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="header-decoration"></div>
+        <div class="header-decoration2"></div>
+        <h1>📚 কোর্স স্টোর</h1>
+        <p>✨ প্রিমিয়াম কোর্স সেরা দামে পান</p>
+    </div>
+
+    <!-- ============ HOME PAGE ============ -->
+    <div class="page active" id="page-home">
+        <div class="welcome-banner" id="welcomeBanner">
+            <div class="welcome-avatar" id="welcomeAvatar">👋</div>
+            <div class="welcome-text">
+                <h3 id="welcomeName">স্বাগতম!</h3>
+                <p>আজকের জন্য কোন কোর্স পছন্দ? 🎯</p>
+            </div>
+        </div>
+
+        <div class="search-box">
+            <input type="text" placeholder="কোর্স খুঁজুন..." oninput="searchCourses(this.value)">
+        </div>
+
+        <div class="category-filters" id="categoryFilters">
+            <div class="cat-filter active" onclick="filterCategory('all', this)">🌟 সব</div>
+            <div class="cat-filter" onclick="filterCategory('web', this)">💻 ওয়েব</div>
+            <div class="cat-filter" onclick="filterCategory('app', this)">📱 অ্যাপ</div>
+            <div class="cat-filter" onclick="filterCategory('design', this)">🎨 ডিজাইন</div>
+            <div class="cat-filter" onclick="filterCategory('marketing', this)">📊 মার্কেটিং</div>
+            <div class="cat-filter" onclick="filterCategory('hacking', this)">🔒 হ্যাকিং</div>
+        </div>
+
+        <div class="section-title">🔥 <span class="highlight">জনপ্রিয় কোর্স</span></div>
+        
+        <div class="course-grid" id="courseGrid"></div>
+    </div>
+
+    <!-- ============ ORDERS PAGE ============ -->
+    <div class="page" id="page-orders">
+        <div class="section-title">📋 <span class="highlight">আমার অর্ডারসমূহ</span></div>
+        <div id="ordersList"></div>
+    </div>
+
+    <!-- ============ PROFILE PAGE ============ -->
+    <div class="page" id="page-profile">
+        <div class="profile-header" id="profileHeader">
+            <div class="profile-avatar" id="profileAvatar">
+                👤
+                <div class="profile-online"></div>
+            </div>
+            <div class="profile-name" id="profileName">ইউজার</div>
+            <div class="profile-username" id="profileUsername">@username</div>
+            <div class="profile-id" id="profileId">ID: N/A</div>
+        </div>
+
+        <div class="profile-stats" id="profileStats">
+            <div class="profile-stat">
+                <div class="profile-stat-number" id="statTotal">0</div>
+                <div class="profile-stat-label">মোট অর্ডার</div>
+            </div>
+            <div class="profile-stat">
+                <div class="profile-stat-number" id="statApproved">0</div>
+                <div class="profile-stat-label">সফল</div>
+            </div>
+            <div class="profile-stat">
+                <div class="profile-stat-number" id="statPending">0</div>
+                <div class="profile-stat-label">অপেক্ষমাণ</div>
+            </div>
+        </div>
+
+        <div class="profile-menu">
+            <div class="profile-menu-item" onclick="showPage('orders')">
+                <div class="menu-icon" style="background: rgba(124, 58, 237, 0.15);">📦</div>
+                <div class="menu-text">
+                    <h4>আমার অর্ডার</h4>
+                    <p>সকল অর্ডার দেখুন</p>
+                </div>
+                <div class="menu-arrow">›</div>
+            </div>
+            <div class="profile-menu-item" onclick="showPage('home')">
+                <div class="menu-icon" style="background: rgba(236, 72, 153, 0.15);">🛒</div>
+                <div class="menu-text">
+                    <h4>কোর্স কিনুন</h4>
+                    <p>নতুন কোর্স ব্রাউজ করুন</p>
+                </div>
+                <div class="menu-arrow">›</div>
+            </div>
+            <div class="profile-menu-item" onclick="contactAdmin()">
+                <div class="menu-icon" style="background: rgba(6, 182, 212, 0.15);">💬</div>
+                <div class="menu-text">
+                    <h4>সাপোর্ট</h4>
+                    <p>অ্যাডমিনের সাথে যোগাযোগ</p>
+                </div>
+                <div class="menu-arrow">›</div>
+            </div>
+            <div class="profile-menu-item" onclick="showPage('admin')">
+                <div class="menu-icon" style="background: rgba(239, 68, 68, 0.15);">🔐</div>
+                <div class="menu-text">
+                    <h4>অ্যাডমিন প্যানেল</h4>
+                    <p>শুধুমাত্র অ্যাডমিনের জন্য</p>
+                </div>
+                <div class="menu-arrow">›</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ ADMIN PAGE ============ -->
+    <div class="page" id="page-admin">
+        <div id="adminContent">
+            <div class="admin-login-card">
+                <div class="lock-icon">🔐</div>
+                <h2 style="font-size: 18px; margin-bottom: 5px;">অ্যাডমিন প্যানেল</h2>
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 20px;">লগইন করতে পাসওয়ার্ড দিন</p>
+                <div class="form-group">
+                    <input type="password" id="adminPassword" placeholder="🔑 পাসওয়ার্ড দিন"
+                           onkeypress="if(event.key==='Enter')adminLogin()">
+                </div>
+                <button class="submit-btn primary" onclick="adminLogin()">🔓 লগইন করুন</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ PAYMENT MODAL ============ -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal">
+            <div class="modal-handle"></div>
+            <div class="modal-header">
+                <h2>💳 পেমেন্ট করুন</h2>
+                <p id="modalCourseName" style="font-size: 13px; color: var(--text-secondary); margin-top: 5px;"></p>
+            </div>
+            <div class="modal-body">
+                <div class="steps">
+                    <div class="step active" id="step1">
+                        <div class="step-circle">1</div>
+                        <div class="step-label">পেমেন্ট</div>
+                    </div>
+                    <div class="step" id="step2">
+                        <div class="step-circle">2</div>
+                        <div class="step-label">তথ্য</div>
+                    </div>
+                    <div class="step" id="step3">
+                        <div class="step-circle">3</div>
+                        <div class="step-label">সম্পন্ন</div>
+                    </div>
+                </div>
+
+                <!-- Step 1 -->
+                <div id="paymentStep1">
+                    <p style="font-size: 15px; font-weight: 800; margin-bottom: 12px; text-align: center;">
+                        পেমেন্ট মেথড বাছাই করুন
+                    </p>
+                    <div class="payment-methods">
+                        <div class="payment-method bkash" onclick="selectPayment('bkash', this)">
+                            <div class="check-mark">✓</div>
+                            <div class="payment-method-icon">💗</div>
+                            <div class="payment-method-name" style="color: var(--bkash);">বিকাশ</div>
+                        </div>
+                        <div class="payment-method nagad" onclick="selectPayment('nagad', this)">
+                            <div class="check-mark">✓</div>
+                            <div class="payment-method-icon">🧡</div>
+                            <div class="payment-method-name" style="color: var(--nagad);">নগদ</div>
+                        </div>
+                    </div>
+                    <div id="paymentDetails" style="display: none;"></div>
+                    <button class="submit-btn primary" id="nextStep1Btn" onclick="goToStep(2)" disabled>
+                        পরবর্তী ধাপ →
+                    </button>
+                </div>
+
+                <!-- Step 2 -->
+                <div id="paymentStep2" style="display: none;">
+                    <div class="form-group">
+                        <label>👤 আপনার নাম *</label>
+                        <input type="text" id="customerName" placeholder="আপনার পুরো নাম">
+                    </div>
+                    <div class="form-group">
+                        <label>📱 যে নম্বর থেকে পাঠিয়েছেন *</label>
+                        <input type="tel" id="senderNumber" placeholder="01XXXXXXXXX">
+                    </div>
+                    <div class="form-group">
+                        <label>🔢 ট্রানজেকশন আইডি (TrxID) *</label>
+                        <input type="text" id="trxId" placeholder="যেমন: ABC123XYZ">
+                    </div>
+                    <div class="form-group">
+                        <label>💰 পরিমাণ (টাকা) *</label>
+                        <input type="number" id="amountPaid" placeholder="কত টাকা পাঠিয়েছেন">
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="submit-btn ghost" onclick="goToStep(1)">← পেছনে</button>
+                        <button class="submit-btn success" onclick="submitOrder()">✅ জমা দিন</button>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div id="paymentStep3" style="display: none; text-align: center; padding: 20px 0;">
+                    <div style="font-size: 70px; margin-bottom: 15px;">🎉</div>
+                    <h3 style="font-size: 20px; margin-bottom: 10px; background: linear-gradient(135deg, var(--success), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        অর্ডার সফল!
+                    </h3>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 25px; line-height: 1.7;">
+                        অ্যাডমিন আপনার পেমেন্ট যাচাই করে<br>অনুমোদন দিলে কোর্সের লিংক পাবেন।<br>
+                        টেলিগ্রামেও নোটিফিকেশন যাবে! 🔔
+                    </p>
+                    <button class="submit-btn primary" onclick="closeModal()">👍 ঠিক আছে</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ BOTTOM NAVIGATION ============ -->
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="showPage('home')" id="nav-home">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label">হোম</div>
+        </div>
+        <div class="nav-item" onclick="showPage('orders')" id="nav-orders">
+            <div class="nav-icon">📦</div>
+            <div class="nav-label">অর্ডার</div>
+            <div class="nav-badge" id="orderBadge" style="display: none;">0</div>
+        </div>
+        <div class="nav-item" onclick="showPage('profile')" id="nav-profile">
+            <div class="nav-icon">👤</div>
+            <div class="nav-label">প্রোফাইল</div>
+        </div>
+        <div class="nav-item" onclick="showPage('admin')" id="nav-admin">
+            <div class="nav-icon">🔐</div>
+            <div class="nav-label">অ্যাডমিন</div>
+        </div>
+    </div>
+
+    <script>
+        // ============ CONFIG ============
+        const CONFIG = {
+            adminPassword: 'admin123',
+            bkashNumber: '01812137592',
+            nagadNumber: '01812137592',
+            botToken: '8859117435:AAE0-oq71VNdndxJmtWB-DpVNdr9i82D0ZM',
+            adminChatId: '6377295796'
+        };
+
+        // ============ COURSES DATA ============
+        const courses = [
+            {
+                id: 1,
+                title: 'ফুল স্ট্যাক ওয়েব ডেভেলপমেন্ট',
+                desc: 'HTML, CSS, JavaScript, React, Node.js, MongoDB সহ সম্পূর্ণ ওয়েব ডেভেলপমেন্ট।',
+                price: 500,
+                oldPrice: 2000,
+                category: 'web',
+                badge: '🔥 জনপ্রিয়',
+                badgeClass: 'badge-popular',
+                emoji: '💻',
+                gradient: 'linear-gradient(135deg, #667eea, #764ba2)',
+                features: ['৫০+ ঘণ্টা ভিডিও', 'সার্টিফিকেট', 'লাইভ সাপোর্ট'],
+                rating: '4.9'
+            },
+            {
+                id: 2,
+                title: 'অ্যান্ড্রয়েড অ্যাপ ডেভেলপমেন্ট',
+                desc: 'Java ও Kotlin দিয়ে প্রফেশনাল অ্যান্ড্রয়েড অ্যাপ তৈরি শিখুন।',
+                price: 600,
+                oldPrice: 2500,
+                category: 'app',
+                badge: '✨ নতুন',
+                badgeClass: 'badge-new',
+                emoji: '📱',
+                gradient: 'linear-gradient(135deg, #f093fb, #f5576c)',
+                features: ['৪০+ ঘণ্টা', '১০+ প্রজেক্ট', 'সোর্স কোড'],
+                rating: '4.8'
+            },
+            {
+                id: 3,
+                title: 'গ্রাফিক ডিজাইন মাস্টারক্লাস',
+                desc: 'Photoshop, Illustrator, Canva দিয়ে প্রফেশনাল ডিজাইন শিখুন।',
+                price: 400,
+                oldPrice: 1800,
+                category: 'design',
+                badge: '💥 78% ছাড়',
+                badgeClass: 'badge-discount',
+                emoji: '🎨',
+                gradient: 'linear-gradient(135deg, #4facfe, #00f2fe)',
+                features: ['৩০+ ঘণ্টা', 'রিসোর্স ফাইল', 'সার্টিফিকেট'],
+                rating: '4.7'
+            },
+            {
+                id: 4,
+                title: 'ডিজিটাল মার্কেটিং A-Z',
+                desc: 'SEO, SEM, Social Media Marketing, Email Marketing সব কিছু।',
+                price: 350,
+                oldPrice: 1500,
+                category: 'marketing',
+                badge: '🔥 জনপ্রিয়',
+                badgeClass: 'badge-popular',
+                emoji: '📊',
+                gradient: 'linear-gradient(135deg, #43e97b, #38f9d7)',
+                features: ['২৫+ ঘণ্টা', 'কেস স্টাডি', 'টুলস গাইড'],
+                rating: '4.8'
+            },
+            {
+                id: 5,
+                title: 'এথিক্যাল হ্যাকিং কোর্স',
+                desc: 'সাইবার সিকিউরিটি ও এথিক্যাল হ্যাকিং এর সম্পূর্ণ গাইড।',
+                price: 700,
+                oldPrice: 3000,
+                category: 'hacking',
+                badge: '✨ নতুন',
+                badgeClass: 'badge-new',
+                emoji: '🔒',
+                gradient: 'linear-gradient(135deg, #fa709a, #fee140)',
+                features: ['৬০+ ঘণ্টা', 'ল্যাব এক্সেস', 'সার্টিফিকেট'],
+                rating: '4.9'
+            },
+            {
+                id: 6,
+                title: 'React Native মোবাইল অ্যাপ',
+                desc: 'একই কোডে iOS ও Android অ্যাপ তৈরি করুন React Native দিয়ে।',
+                price: 550,
+                oldPrice: 2200,
+                category: 'app',
+                badge: '💥 75% ছাড়',
+                badgeClass: 'badge-discount',
+                emoji: '⚛️',
+                gradient: 'linear-gradient(135deg, #a18cd1, #fbc2eb)',
+                features: ['৪৫+ ঘণ্টা', 'রিয়েল প্রজেক্ট', 'সোর্স কোড'],
+                rating: '4.7'
+            },
+            {
+                id: 7,
+                title: 'UI/UX ডিজাইন কোর্স',
+                desc: 'Figma, Adobe XD দিয়ে মডার্ন UI/UX ডিজাইন শিখুন।',
+                price: 450,
+                oldPrice: 1800,
+                category: 'design',
+                badge: '🔥 জনপ্রিয়',
+                badgeClass: 'badge-popular',
+                emoji: '✏️',
+                gradient: 'linear-gradient(135deg, #ff9a9e, #fecfef)',
+                features: ['৩৫+ ঘণ্টা', 'প্রজেক্ট ফাইল', 'পোর্টফোলিও'],
+                rating: '4.6'
+            },
+            {
+                id: 8,
+                title: 'Python প্রোগ্রামিং',
+                desc: 'বেসিক থেকে অ্যাডভান্সড Python প্রোগ্রামিং শিখুন।',
+                price: 400,
+                oldPrice: 1600,
+                category: 'web',
+                badge: '✨ নতুন',
+                badgeClass: 'badge-new',
+                emoji: '🐍',
+                gradient: 'linear-gradient(135deg, #96fbc4, #f9f586)',
+                features: ['৫০+ ঘণ্টা', 'প্র্যাক্টিস', 'প্রজেক্ট'],
+                rating: '4.8'
+            }
+        ];
+
+        // ============ STATE ============
+        let selectedCourse = null;
+        let selectedPaymentMethod = null;
+        let isAdminLoggedIn = false;
+        let orders = JSON.parse(localStorage.getItem('courseOrders') || '[]');
+        let currentPage = 'home';
+
+        // ============ TELEGRAM WEB APP ============
+        let tg = window.Telegram?.WebApp;
+        if (tg) {
+            tg.ready();
+            tg.expand();
+            tg.setHeaderColor('#0A0A1A');
+            tg.setBackgroundColor('#0A0A1A');
+        }
+
+        function getTelegramUser() {
+            if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+                return tg.initDataUnsafe.user;
+            }
+            return null;
+        }
+
+        function getTelegramPhotoUrl(user) {
+            if (user && user.photo_url) {
+                return user.photo_url;
+            }
+            return null;
+        }
+
+        // ============ INIT USER INFO ============
+        function initUserInfo() {
+            const user = getTelegramUser();
+            if (user) {
+                const firstName = user.first_name || '';
+                const lastName = user.last_name || '';
+                const username = user.username || 'N/A';
+                const fullName = `${firstName} ${lastName}`.trim();
+
+                // Welcome banner
+                document.getElementById('welcomeName').textContent = `স্বাগতম, ${firstName}! 👋`;
+                
+                // Profile page
+                document.getElementById('profileName').textContent = fullName || 'ইউজার';
+                document.getElementById('profileUsername').textContent = `@${username}`;
+                document.getElementById('profileId').textContent = `🆔 ID: ${user.id}`;
+
+                // Profile photo
+                const photoUrl = getTelegramPhotoUrl(user);
+                if (photoUrl) {
+                    document.getElementById('profileAvatar').innerHTML = `
+                        <img src="${photoUrl}" alt="Profile">
+                        <div class="profile-online"></div>
+                    `;
+                    document.getElementById('welcomeAvatar').innerHTML = `
+                        <img src="${photoUrl}" alt="Avatar">
+                    `;
+                } else {
+                    const initial = firstName.charAt(0) || '👤';
+                    document.getElementById('profileAvatar').innerHTML = `
+                        ${initial}
+                        <div class="profile-online"></div>
+                    `;
+                    document.getElementById('welcomeAvatar').textContent = initial;
+                }
+            }
+            updateProfileStats();
+        }
+
+        function updateProfileStats() {
+            const user = getTelegramUser();
+            let userOrders = orders;
+            if (user) {
+                userOrders = orders.filter(o => o.telegramUser && o.telegramUser.id === user.id);
+            }
+            document.getElementById('statTotal').textContent = userOrders.length;
+            document.getElementById('statApproved').textContent = userOrders.filter(o => o.status === 'approved').length;
+            document.getElementById('statPending').textContent = userOrders.filter(o => o.status === 'pending').length;
+
+            // Update badge
+            const pendingCount = userOrders.filter(o => o.status === 'pending').length;
+            const badge = document.getElementById('orderBadge');
+            if (pendingCount > 0) {
+                badge.style.display = 'block';
+                badge.textContent = pendingCount;
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        // ============ RENDER COURSES ============
+        function renderCourses(filteredCourses = courses) {
+            const grid = document.getElementById('courseGrid');
+
+            if (filteredCourses.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">🔍</div>
+                        <h3>কোনো কোর্স পাওয়া যায়নি</h3>
+                        <p>অন্য কিওয়ার্ড দিয়ে খুঁজুন</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filteredCourses.map(course => `
+                <div class="course-card">
+                    <div class="course-banner" style="background: ${course.gradient};">
+                        ${course.emoji}
+                        <span class="course-badge ${course.badgeClass}">${course.badge}</span>
+                    </div>
+                    <div class="course-info">
+                        <div class="course-title">${course.title}</div>
+                        <div class="course-desc">${course.desc}</div>
+                        <div class="course-features">
+                            ${course.features.map(f => `<span class="feature-tag">${f}</span>`).join('')}
+                        </div>
+                        <div class="course-meta">
+                            <div class="course-price">
+                                <span class="price-current">৳${course.price}</span>
+                                <span class="price-old">৳${course.oldPrice}</span>
+                            </div>
+                            <div class="course-rating">⭐ ${course.rating}</div>
+                        </div>
+                        <button class="buy-btn" onclick="openPaymentModal(${course.id})">
+                            🛒 এখনই কিনুন
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ============ SEARCH & FILTER ============
+        function searchCourses(query) {
+            const filtered = courses.filter(c =>
+                c.title.toLowerCase().includes(query.toLowerCase()) ||
+                c.desc.toLowerCase().includes(query.toLowerCase())
+            );
+            renderCourses(filtered);
+        }
+
+        function filterCategory(category, el) {
+            document.querySelectorAll('.cat-filter').forEach(f => f.classList.remove('active'));
+            el.classList.add('active');
+            if (category === 'all') {
+                renderCourses(courses);
+            } else {
+                renderCourses(courses.filter(c => c.category === category));
+            }
+        }
+
+        // ============ NAVIGATION ============
+        function showPage(page) {
+            currentPage = page;
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(t => t.classList.remove('active'));
+
+            document.getElementById('page-' + page).classList.add('active');
+            document.getElementById('nav-' + page).classList.add('active');
+
+            if (page === 'orders') renderOrders();
+            if (page === 'profile') { initUserInfo(); }
+            if (page === 'admin' && isAdminLoggedIn) renderAdminPanel();
+        }
+
+        // ============ PAYMENT MODAL ============
+        function openPaymentModal(courseId) {
+            selectedCourse = courses.find(c => c.id === courseId);
+            selectedPaymentMethod = null;
+
+            document.getElementById('modalCourseName').textContent =
+                `${selectedCourse.title} — ৳${selectedCourse.price}`;
+
+            document.getElementById('paymentModal').classList.add('active');
+            goToStep(1);
+
+            document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+            document.getElementById('paymentDetails').style.display = 'none';
+            document.getElementById('nextStep1Btn').disabled = true;
+
+            document.getElementById('customerName').value = '';
+            document.getElementById('senderNumber').value = '';
+            document.getElementById('trxId').value = '';
+            document.getElementById('amountPaid').value = selectedCourse.price;
+
+            // Auto-fill name from Telegram
+            const user = getTelegramUser();
+            if (user) {
+                document.getElementById('customerName').value = 
+                    `${user.first_name || ''} ${user.last_name || ''}`.trim();
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+        }
+
+        function selectPayment(method, el) {
+            selectedPaymentMethod = method;
+            document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+            el.classList.add('selected');
+
+            const number = CONFIG.bkashNumber; // same number for both
+            const methodName = method === 'bkash' ? 'বিকাশ' : 'নগদ';
+            const color = method === 'bkash' ? 'var(--bkash)' : 'var(--nagad)';
+            const boxClass = method === 'bkash' ? 'bkash-box' : 'nagad-box';
+            const btnColor = method === 'bkash' ? 'background: var(--bkash)' : 'background: var(--nagad)';
+
+            document.getElementById('paymentDetails').style.display = 'block';
+            document.getElementById('paymentDetails').innerHTML = `
+                <div class="payment-info-box ${boxClass}">
+                    <h3 style="color: ${color};">📲 ${methodName} সেন্ড মানি করুন</h3>
+                    <p style="font-size: 12px; color: var(--text-secondary);">নিচের নম্বরে <strong>সেন্ড মানি</strong> করুন:</p>
+                    <div class="payment-number">${number}</div>
+                    <button class="copy-btn" onclick="copyNumber('${number}')" style="${btnColor};">
+                        📋 নম্বর কপি করুন
+                    </button>
+                    <p style="margin-top: 12px; font-size: 13px;">
+                        পরিমাণ: <strong style="color: ${color}; font-size: 18px;">৳${selectedCourse.price}</strong>
+                    </p>
+                </div>
+
+                <div class="instructions">
+                    <h4>⚠️ গুরুত্বপূর্ণ নির্দেশনা:</h4>
+                    <ol>
+                        <li>উপরের নম্বরে <strong>${methodName} সেন্ড মানি</strong> করুন</li>
+                        <li>পরিমাণ: <strong>৳${selectedCourse.price}</strong></li>
+                        <li><strong>ট্রানজেকশন আইডি (TrxID)</strong> সংরক্ষণ করুন</li>
+                        <li>পরবর্তী ধাপে তথ্য পূরণ করুন</li>
+                        <li>অ্যাডমিন যাচাই করে লিংক পাঠাবে 🔗</li>
+                    </ol>
+                </div>
+            `;
+
+            document.getElementById('nextStep1Btn').disabled = false;
+        }
+
+        function copyNumber(number) {
+            navigator.clipboard.writeText(number).then(() => {
+                showToast('✅ নম্বর কপি হয়েছে!');
+            }).catch(() => {
+                const input = document.createElement('input');
+                input.value = number;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+                showToast('✅ নম্বর কপি হয়েছে!');
+            });
+        }
+
+        function goToStep(step) {
+            document.getElementById('paymentStep1').style.display = step === 1 ? 'block' : 'none';
+            document.getElementById('paymentStep2').style.display = step === 2 ? 'block' : 'none';
+            document.getElementById('paymentStep3').style.display = step === 3 ? 'block' : 'none';
+
+            for (let i = 1; i <= 3; i++) {
+                const stepEl = document.getElementById('step' + i);
+                stepEl.className = 'step';
+                if (i < step) stepEl.classList.add('completed');
+                if (i === step) stepEl.classList.add('active');
+            }
+        }
+
+        // ============ SUBMIT ORDER ============
+        function submitOrder() {
+            const name = document.getElementById('customerName').value.trim();
+            const senderNumber = document.getElementById('senderNumber').value.trim();
+            const trxId = document.getElementById('trxId').value.trim();
+            const amount = document.getElementById('amountPaid').value.trim();
+
+            if (!name || !senderNumber || !trxId || !amount) {
+                showToast('⚠️ সব তথ্য পূরণ করুন!');
+                return;
+            }
+
+            if (senderNumber.length < 11) {
+                showToast('⚠️ সঠিক ফোন নম্বর দিন!');
+                return;
+            }
+
+            const tgUser = getTelegramUser();
+
+            const order = {
+                id: 'ORD-' + Date.now(),
+                courseId: selectedCourse.id,
+                courseName: selectedCourse.title,
+                coursePrice: selectedCourse.price,
+                customerName: name,
+                senderNumber: senderNumber,
+                trxId: trxId,
+                amountPaid: amount,
+                paymentMethod: selectedPaymentMethod,
+                status: 'pending',
+                driveLink: '',
+                date: new Date().toLocaleString('bn-BD'),
+                telegramUser: tgUser ? {
+                    id: tgUser.id,
+                    firstName: tgUser.first_name,
+                    lastName: tgUser.last_name || '',
+                    username: tgUser.username || ''
+                } : null
+            };
+
+            orders.push(order);
+            saveOrders();
+            sendTelegramNotification(order);
+            updateProfileStats();
+            goToStep(3);
+            showToast('✅ অর্ডার সফলভাবে জমা হয়েছে!');
+        }
+
+        // ============ TELEGRAM NOTIFICATIONS ============
+        async function sendTelegramNotification(order) {
+            const message = `
+🆕 *নতুন অর্ডার এসেছে!*
+━━━━━━━━━━━━━━━
+
+📦 *অর্ডার:* \`${order.id}\`
+📚 *কোর্স:* ${order.courseName}
+💰 *মূল্য:* ৳${order.coursePrice}
+
+━━━━━━━━━━━━━━━
+👤 *ক্রেতা:* ${order.customerName}
+📱 *নম্বর:* \`${order.senderNumber}\`
+💳 *মেথড:* ${order.paymentMethod === 'bkash' ? '💗 বিকাশ' : '🧡 নগদ'}
+🔢 *TrxID:* \`${order.trxId}\`
+💵 *প্রদত্ত:* ৳${order.amountPaid}
+📅 *তারিখ:* ${order.date}
+${order.telegramUser ? `\n👤 *টেলিগ্রাম:* ${order.telegramUser.firstName} ${order.telegramUser.lastName}\n🔗 *ইউজারনেম:* @${order.telegramUser.username}\n🆔 *Chat ID:* \`${order.telegramUser.id}\`` : ''}
+━━━━━━━━━━━━━━━
+⚡ অ্যাডমিন প্যানেলে গিয়ে অনুমোদন করুন।
+            `;
+
+            try {
+                await fetch(`https://api.telegram.org/bot${CONFIG.botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: CONFIG.adminChatId,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+            } catch (err) {
+                console.log('Notification failed:', err);
+            }
+        }
+
+        async function sendDriveLinkToUser(order) {
+            if (!order.telegramUser) return;
+
+            const message = `
+🎉 *অভিনন্দন!*
+━━━━━━━━━━━━━━━
+
+✅ আপনার অর্ডার *অনুমোদিত* হয়েছে!
+
+📚 *কোর্স:* ${order.courseName}
+💰 *মূল্য:* ৳${order.coursePrice}
+
+🔗 *ডাউনলোড লিংক:*
+${order.driveLink}
+
+━━━━━━━━━━━━━━━
+ধন্যবাদ আমাদের থেকে কোর্স কেনার জন্য! 🙏
+আবারও আমাদের স্টোর ভিজিট করুন। ✨
+            `;
+
+            try {
+                await fetch(`https://api.telegram.org/bot${CONFIG.botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: order.telegramUser.id,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+                showToast('✅ ইউজারকে টেলিগ্রামে লিংক পাঠানো হয়েছে!');
+            } catch (err) {
+                console.log('Send link failed:', err);
+                showToast('⚠️ টেলিগ্রামে পাঠাতে সমস্যা');
+            }
+        }
+
+        async function sendRejectionToUser(order) {
+            if (!order.telegramUser) return;
+
+            const message = `
+❌ *অর্ডার প্রত্যাখ্যাত*
+━━━━━━━━━━━━━━━
+
+📚 *কোর্স:* ${order.courseName}
+🔢 *TrxID:* \`${order.trxId}\`
+
+পেমেন্ট যাচাই করা যায়নি।
+সঠিক তথ্য দিয়ে আবার চেষ্টা করুন। 🙏
+            `;
+
+            try {
+                await fetch(`https://api.telegram.org/bot${CONFIG.botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: order.telegramUser.id,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+            } catch (err) {
+                console.log('Rejection msg failed:', err);
+            }
+        }
+
+        // ============ ORDERS PAGE ============
+        function renderOrders() {
+            const list = document.getElementById('ordersList');
+            const tgUser = getTelegramUser();
+
+            let userOrders = orders;
+            if (tgUser) {
+                userOrders = orders.filter(o =>
+                    o.telegramUser && o.telegramUser.id === tgUser.id
+                );
+            }
+
+            if (userOrders.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">📭</div>
+                        <h3>কোনো অর্ডার নেই</h3>
+                        <p>কোর্স কিনলে এখানে দেখাবে</p>
+                        <button class="submit-btn primary" style="max-width: 200px; margin: 20px auto 0;" onclick="showPage('home')">
+                            🛒 কোর্স দেখুন
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = userOrders.slice().reverse().map(order => `
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-id">${order.id}</span>
+                        <span class="order-status status-${order.status}">
+                            ${order.status === 'pending' ? '⏳ অপেক্ষমাণ' :
+                              order.status === 'approved' ? '✅ অনুমোদিত' : '❌ প্রত্যাখ্যাত'}
+                        </span>
+                    </div>
+                    <div class="order-course-name">${order.courseName}</div>
+                    <div class="order-details">
+                        💳 ${order.paymentMethod === 'bkash' ? '💗 বিকাশ' : '🧡 নগদ'} &nbsp;|&nbsp;
+                        🔢 TrxID: <strong>${order.trxId}</strong><br>
+                        💵 ৳${order.amountPaid} &nbsp;|&nbsp; 📅 ${order.date}
+                    </div>
+                    ${order.status === 'approved' && order.driveLink ? `
+                        <button class="download-btn" onclick="window.open('${order.driveLink}', '_blank')">
+                            📥 কোর্স ডাউনলোড করুন
+                        </button>
+                    ` : ''}
+                    ${order.status === 'pending' ? `
+                        <p style="color: var(--warning); font-size: 12px; margin-top: 12px; text-align: center;">
+                            ⏳ অ্যাডমিন শীঘ্রই যাচাই করবে। অনুগ্রহ করে অপেক্ষা করুন...
+                        </p>
+                    ` : ''}
+                    ${order.status === 'rejected' ? `
+                        <p style="color: var(--danger); font-size: 12px; margin-top: 12px;">
+                            ⚠️ পেমেন্ট যাচাই করা যায়নি। সঠিক তথ্য দিয়ে আবার চেষ্টা করুন।
+                        </p>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        // ============ ADMIN PANEL ============
+        function adminLogin() {
+            const pass = document.getElementById('adminPassword').value;
+            if (pass === CONFIG.adminPassword) {
+                isAdminLoggedIn = true;
+                renderAdminPanel();
+                showToast('✅ অ্যাডমিন লগইন সফল!');
+            } else {
+                showToast('❌ ভুল পাসওয়ার্ড!');
+            }
+        }
+
+        function renderAdminPanel() {
+            const content = document.getElementById('adminContent');
+
+            const pendingCount = orders.filter(o => o.status === 'pending').length;
+            const approvedCount = orders.filter(o => o.status === 'approved').length;
+            const rejectedCount = orders.filter(o => o.status === 'rejected').length;
+            const totalRevenue = orders.filter(o => o.status === 'approved')
+                .reduce((sum, o) => sum + parseInt(o.amountPaid || 0), 0);
+
+            content.innerHTML = `
+                <div class="section-title">🔐 <span class="highlight">অ্যাডমিন ড্যাশবোর্ড</span></div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">${pendingCount}</div>
+                        <div class="stat-label">⏳ অপেক্ষমাণ</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${approvedCount}</div>
+                        <div class="stat-label">✅ অনুমোদিত</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${rejectedCount}</div>
+                        <div class="stat-label">❌ প্রত্যাখ্যাত</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">৳${totalRevenue}</div>
+                        <div class="stat-label">💰 মোট আয়</div>
+                    </div>
+                </div>
+
+                <div class="section-title" style="font-size: 15px;">📋 সকল অর্ডার (${orders.length})</div>
+
+                ${orders.length === 0 ? `
+                    <div class="empty-state">
+                        <div class="icon">📭</div>
+                        <h3>কোনো অর্ডার নেই</h3>
+                    </div>
+                ` : orders.slice().reverse().map(order => `
+                    <div class="admin-order-card" style="border-left: 3px solid ${
+                        order.status === 'pending' ? 'var(--warning)' :
+                        order.status === 'approved' ? 'var(--success)' : 'var(--danger)'};">
+                        <div class="order-header">
+                            <span class="order-id">${order.id}</span>
+                            <span class="order-status status-${order.status}">
+                                ${order.status === 'pending' ? '⏳ অপেক্ষমাণ' :
+                                  order.status === 'approved' ? '✅ অনুমোদিত' : '❌ প্রত্যাখ্যাত'}
+                            </span>
+                        </div>
+                        <div class="order-course-name">${order.courseName}</div>
+                        <div class="order-details">
+                            👤 <strong>${order.customerName}</strong><br>
+                            📱 ${order.senderNumber}<br>
+                            💳 ${order.paymentMethod === 'bkash' ? '💗 বিকাশ' : '🧡 নগদ'} &nbsp;|&nbsp;
+                            🔢 TrxID: <strong style="color: var(--primary-light);">${order.trxId}</strong><br>
+                            💵 ৳${order.amountPaid} &nbsp;|&nbsp; 📅 ${order.date}
+                            ${order.telegramUser ? `<br>🔗 TG: ${order.telegramUser.firstName} @${order.telegramUser.username} (ID: ${order.telegramUser.id})` : ''}
+                        </div>
+
+                        ${order.status === 'pending' ? `
+                            <input type="text" class="link-input"
+                                   id="link-${order.id}"
+                                   placeholder="🔗 গুগল ড্রাইভ লিংক পেস্ট করুন..."
+                                   value="${order.driveLink || ''}">
+                            <div class="admin-actions">
+                                <button class="approve-btn" onclick="approveOrder('${order.id}')">
+                                    ✅ অনুমোদন
+                                </button>
+                                <button class="reject-btn" onclick="rejectOrder('${order.id}')">
+                                    ❌ প্রত্যাখ্যান
+                                </button>
+                            </div>
+                        ` : ''}
+
+                        ${order.status === 'approved' ? `
+                            <p style="color: var(--success); font-size: 12px; margin-top: 12px;">
+                                🔗 ${order.driveLink || 'N/A'}
+                            </p>
+                        ` : ''}
+                    </div>
+                `).join('')}
+
+                <button class="submit-btn ghost" style="margin-top: 20px;" onclick="adminLogout()">
+                    🚪 লগআউট
+                </button>
+            `;
+        }
+
+        function approveOrder(orderId) {
+            const linkInput = document.getElementById('link-' + orderId);
+            const driveLink = linkInput ? linkInput.value.trim() : '';
+
+            if (!driveLink) {
+                showToast('⚠️ ড্রাইভ লিংক দিন!');
+                return;
+            }
+
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = 'approved';
+                order.driveLink = driveLink;
+                saveOrders();
+                renderAdminPanel();
+                sendDriveLinkToUser(order);
+                updateProfileStats();
+                showToast('✅ অর্ডার অনুমোদিত!');
+            }
+        }
+
+        function rejectOrder(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = 'rejected';
+                saveOrders();
+                renderAdminPanel();
+                sendRejectionToUser(order);
+                updateProfileStats();
+                showToast('❌ অর্ডার প্রত্যাখ্যাত!');
+            }
+        }
+
+        function adminLogout() {
+            isAdminLoggedIn = false;
+            document.getElementById('adminContent').innerHTML = `
+                <div class="admin-login-card">
+                    <div class="lock-icon">🔐</div>
+                    <h2 style="font-size: 18px; margin-bottom: 5px;">অ্যাডমিন প্যানেল</h2>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 20px;">লগইন করতে পাসওয়ার্ড দিন</p>
+                    <div class="form-group">
+                        <input type="password" id="adminPassword" placeholder="🔑 পাসওয়ার্ড দিন"
+                               onkeypress="if(event.key==='Enter')adminLogin()">
+                    </div>
+                    <button class="submit-btn primary" onclick="adminLogin()">🔓 লগইন করুন</button>
+                </div>
+            `;
+            showToast('🚪 লগআউট সফল');
+        }
+
+        function contactAdmin() {
+            showToast('💬 টেলিগ্রামে যোগাযোগ করুন');
+            window.open('https://t.me/', '_blank');
+        }
+
+        // ============ UTILITY ============
+        function saveOrders() {
+            localStorage.setItem('courseOrders', JSON.stringify(orders));
+        }
+
+        function showToast(msg) {
+            const existing = document.querySelector('.toast');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                if (toast.parentNode) toast.remove();
+            }, 3000);
+        }
+
+        // ============ INIT ============
+        renderCourses();
+        initUserInfo();
+
+        // Close modal on overlay click
+        document.getElementById('paymentModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // Haptic feedback for Telegram
+        document.addEventListener('click', function(e) {
+            if (tg && tg.HapticFeedback) {
+                if (e.target.classList.contains('buy-btn') || 
+                    e.target.classList.contains('submit-btn') ||
+                    e.target.classList.contains('nav-item')) {
+                    tg.HapticFeedback.impactOccurred('light');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
