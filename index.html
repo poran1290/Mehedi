@@ -2,9 +2,8 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-  <meta name="theme-color" content="#10091f">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0d081a">
 
   <title>RCN - Smart Investment</title>
 
@@ -39,19 +38,21 @@
           type="button"
           aria-label="Notifications"
         >
-          <span class="bell-icon">🔔</span>
+          🔔
           <span class="notification-dot"></span>
         </button>
 
         <div id="notificationPanel" class="notification-panel">
 
           <div class="notification-header">
-            <strong data-i18n="notifications">নোটিফিকেশন</strong>
+            <strong data-i18n="notifications">
+              নোটিফিকেশন
+            </strong>
 
             <button
               id="notificationClose"
-              class="notification-close"
               type="button"
+              aria-label="Close"
             >
               ×
             </button>
@@ -59,11 +60,9 @@
 
           <div class="notification-item">
 
-            <div class="notification-icon">
-              ✨
-            </div>
+            <span>✨</span>
 
-            <div class="notification-content">
+            <div>
               <strong data-i18n="welcome">
                 RCN-এ স্বাগতম
               </strong>
@@ -77,11 +76,9 @@
 
           <div class="notification-item">
 
-            <div class="notification-icon">
-              🛡️
-            </div>
+            <span>🛡️</span>
 
-            <div class="notification-content">
+            <div>
               <strong data-i18n="secureAccount">
                 অ্যাকাউন্ট সুরক্ষিত রাখুন
               </strong>
@@ -117,13 +114,9 @@
     <!-- LOGO -->
     <section class="logo-section">
 
-      <div class="logo-star">
-        ✦
-      </div>
+      <div class="logo-star">✦</div>
 
-      <h1>
-        RCN
-      </h1>
+      <h1>RCN</h1>
 
       <p data-i18n="subtitle">
         স্মার্ট ইনভেস্টমেন্ট প্ল্যাটফর্ম
@@ -135,14 +128,14 @@
     <!-- AUTH CARD -->
     <section class="auth-card">
 
-      <!-- Card Title -->
+      <!-- CARD TITLE -->
       <div class="card-title">
 
         <div class="card-icon">
           🔐
         </div>
 
-        <div class="card-title-text">
+        <div>
 
           <h2 data-i18n="accountAccess">
             অ্যাকাউন্ট অ্যাক্সেস
@@ -162,7 +155,7 @@
 
         <button
           id="loginTab"
-          class="tab-button active"
+          class="active"
           type="button"
         >
           <span data-i18n="login">
@@ -172,7 +165,6 @@
 
         <button
           id="registerTab"
-          class="tab-button"
           type="button"
         >
           <span data-i18n="register">
@@ -187,15 +179,13 @@
       <div
         id="formMessage"
         class="form-message"
-        role="alert"
       ></div>
 
 
-      <!-- ================= LOGIN FORM ================= -->
+      <!-- ================= LOGIN ================= -->
 
       <form
         id="loginForm"
-        class="auth-form"
         novalidate
       >
 
@@ -211,10 +201,9 @@
 
           <div class="phone-box">
 
-            <div class="country-code">
-              <span class="bd-flag">🇧🇩</span>
-              <span>+880</span>
-            </div>
+            <span class="country-code">
+              🇧🇩 +880
+            </span>
 
             <input
               id="loginPhone"
@@ -257,7 +246,7 @@
               data-target="loginPassword"
               aria-label="Show password"
             >
-              👁️
+              👁
             </button>
 
           </div>
@@ -273,8 +262,8 @@
           <label class="remember-me">
 
             <input
-              id="rememberMe"
               type="checkbox"
+              id="rememberMe"
             >
 
             <span data-i18n="remember">
@@ -334,11 +323,11 @@
       </form>
 
 
-      <!-- ================= REGISTER FORM ================= -->
+      <!-- ================= REGISTER ================= -->
 
       <form
         id="registerForm"
-        class="auth-form hidden"
+        class="hidden"
         novalidate
       >
 
@@ -376,10 +365,9 @@
 
           <div class="phone-box">
 
-            <div class="country-code">
-              <span class="bd-flag">🇧🇩</span>
-              <span>+880</span>
-            </div>
+            <span class="country-code">
+              🇧🇩 +880
+            </span>
 
             <input
               id="registerPhone"
@@ -422,7 +410,7 @@
               data-target="registerPassword"
               aria-label="Show password"
             >
-              👁️
+              👁
             </button>
 
           </div>
@@ -473,7 +461,7 @@
               data-target="confirmPassword"
               aria-label="Show password"
             >
-              👁️
+              👁
             </button>
 
           </div>
@@ -498,7 +486,7 @@
         </label>
 
 
-        <!-- Register -->
+        <!-- Submit -->
         <button
           class="submit-button"
           type="submit"
@@ -543,16 +531,14 @@
 
   <!-- FOOTER -->
   <footer>
-
     © 2026 RCN.
     <span data-i18n="rights">
       সর্বস্বত্ব সংরক্ষিত।
     </span>
-
   </footer>
 
 
-  <!-- ================= FORGOT PASSWORD MODAL ================= -->
+  <!-- FORGOT PASSWORD MODAL -->
 
   <div
     id="forgotModal"
@@ -581,10 +567,7 @@
         আপনার ফোন নম্বর দিন। পুনরুদ্ধারের নির্দেশনা পাঠানো হবে।
       </p>
 
-      <form
-        id="recoveryForm"
-        novalidate
-      >
+      <form id="recoveryForm">
 
         <input
           id="recoveryPhone"
@@ -596,7 +579,7 @@
 
         <small
           id="recoveryError"
-          class="modal-error"
+          class="error-message"
         ></small>
 
         <button
@@ -629,4 +612,4 @@
   <script src="./script.js"></script>
 
 </body>
-</html>
+  </html>
