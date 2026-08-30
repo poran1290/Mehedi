@@ -3,23 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RCN - Login & Registration</title>
-  <link rel="stylesheet" href="style.css">
+  <title>RCN - Smart Investment</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
 
   <header class="topbar">
     <div class="brand">RCN</div>
 
     <div class="top-actions">
-      <button>🔔</button>
+      <button type="button">🔔</button>
       <span>🌐 বাংলা⌄</span>
     </div>
   </header>
 
   <main>
     <section class="welcome">
-      <div class="lightning">⚡</div>
+      <div class="lightning">✦</div>
       <h1>RCN</h1>
       <p>আপনার স্মার্ট ইনভেস্টমেন্ট প্ল্যাটফর্ম</p>
     </section>
@@ -27,63 +33,109 @@
     <section class="auth-box">
 
       <div class="tabs">
-        <button id="loginTab" class="active" onclick="showLogin()">
+        <button id="loginTab" class="active" type="button" onclick="showLogin()">
           লগইন
         </button>
-        <button id="registerTab" onclick="showRegister()">
+
+        <button id="registerTab" type="button" onclick="showRegister()">
           রেজিস্ট্রেশন
         </button>
       </div>
 
+      <!-- Login Form -->
       <form id="loginForm">
-        <label>ফোন নম্বর</label>
+        <label for="loginPhone">ফোন নম্বর</label>
+
         <div class="phone-input">
           <span>🇧🇩 +880</span>
-          <input type="tel" placeholder="আপনার ফোন নম্বর লিখুন" required>
+          <input
+            id="loginPhone"
+            type="tel"
+            placeholder="আপনার ফোন নম্বর লিখুন"
+            required
+          >
         </div>
 
-        <label>পাসওয়ার্ড</label>
+        <label for="loginPassword">পাসওয়ার্ড</label>
+
         <div class="password-box">
-          <input type="password" id="loginPassword"
-                 placeholder="আপনার পাসওয়ার্ড লিখুন" required>
+          <input
+            id="loginPassword"
+            type="password"
+            placeholder="আপনার পাসওয়ার্ড লিখুন"
+            required
+          >
+
           <button type="button" onclick="togglePassword('loginPassword', this)">
             👁
           </button>
         </div>
 
         <div class="forgot">
-          <a href="#" onclick="forgotPassword()">পাসওয়ার্ড ভুলে গেছেন?</a>
+          <a href="#" onclick="forgotPassword(); return false;">
+            পাসওয়ার্ড ভুলে গেছেন?
+          </a>
         </div>
 
-        <button class="submit-btn" type="submit">লগইন করুন</button>
+        <button class="submit-btn" type="submit">
+          লগইন করুন
+        </button>
 
         <p class="switch-text">
           অ্যাকাউন্ট নেই?
-          <a href="#" onclick="showRegister()">রেজিস্ট্রেশন করুন</a>
+          <a href="#" onclick="showRegister(); return false;">
+            রেজিস্ট্রেশন করুন
+          </a>
         </p>
       </form>
 
+      <!-- Registration Form -->
       <form id="registerForm" class="hidden">
-        <label>আপনার নাম</label>
-        <input type="text" placeholder="আপনার পূর্ণ নাম লিখুন" required>
 
-        <label>ফোন নম্বর</label>
+        <label for="fullName">আপনার নাম</label>
+        <input
+          id="fullName"
+          type="text"
+          placeholder="আপনার পূর্ণ নাম লিখুন"
+          required
+        >
+
+        <label for="registerPhone">ফোন নম্বর</label>
+
         <div class="phone-input">
           <span>🇧🇩 +880</span>
-          <input type="tel" placeholder="আপনার ফোন নম্বর লিখুন" required>
+          <input
+            id="registerPhone"
+            type="tel"
+            placeholder="আপনার ফোন নম্বর লিখুন"
+            required
+          >
         </div>
 
-        <label>পাসওয়ার্ড</label>
+        <label for="registerPassword">পাসওয়ার্ড</label>
+
         <div class="password-box">
-          <input type="password" id="registerPassword"
-                 placeholder="একটি শক্তিশালী পাসওয়ার্ড দিন" required>
+          <input
+            id="registerPassword"
+            type="password"
+            placeholder="একটি শক্তিশালী পাসওয়ার্ড দিন"
+            required
+          >
+
           <button type="button" onclick="togglePassword('registerPassword', this)">
             👁
           </button>
         </div>
 
-        <label>রেফারেল কোড <small>(যদি থাকে)</small></label>
-        <input type="text" placeholder="রেফারেল কোড লিখুন">
+        <label for="referral">
+          রেফারেল কোড <small>(যদি থাকে)</small>
+        </label>
+
+        <input
+          id="referral"
+          type="text"
+          placeholder="রেফারেল কোড লিখুন"
+        >
 
         <label class="check">
           <input type="checkbox" required>
@@ -96,7 +148,9 @@
 
         <p class="switch-text">
           ইতিমধ্যে অ্যাকাউন্ট আছে?
-          <a href="#" onclick="showLogin()">লগইন করুন</a>
+          <a href="#" onclick="showLogin(); return false;">
+            লগইন করুন
+          </a>
         </p>
       </form>
 
@@ -113,6 +167,6 @@
 
   <div id="toast"></div>
 
-  <script src="script.js"></script>
+  <script src="./script.js"></script>
 </body>
-          </html>
+</html>
