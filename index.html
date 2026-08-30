@@ -3,63 +3,182 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Smart Invest Demo Website">
   <title>Smart Invest</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Smart Invest</h1>
-    <p>আপনার বিনিয়োগ পরিকল্পনা সহজভাবে পরিচালনা করুন</p>
+
+  <header class="navbar">
+    <div class="logo">Smart<span>Invest</span></div>
+
+    <nav>
+      <a href="#home">হোম</a>
+      <a href="#plans">প্ল্যান</a>
+      <a href="#calculator">ক্যালকুলেটর</a>
+      <a href="#about">আমাদের সম্পর্কে</a>
+    </nav>
+
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
   </header>
 
   <main>
-    <section class="hero">
-      <h2>বুদ্ধিমানের মতো বিনিয়োগ করুন</h2>
-      <p>এটি একটি ডেমো investment platform।</p>
-      <a href="#calculator">Return Calculator</a>
-    </section>
+    <section id="home" class="hero">
+      <div class="hero-content">
+        <p class="tag">SMART INVESTMENT PLATFORM</p>
+        <h1>আপনার ভবিষ্যতের জন্য<br><span>স্মার্ট বিনিয়োগ</span></h1>
+        <p>
+          আপনার বিনিয়োগ পরিকল্পনা সহজভাবে হিসাব ও পরিচালনা করুন।
+          এটি একটি ডেমো investment website।
+        </p>
 
-    <section class="plans">
-      <h2>Investment Plans</h2>
-
-      <div class="cards">
-        <div class="card">
-          <h3>Basic</h3>
-          <p>মাসিক রিটার্ন: ৫%</p>
-          <button onclick="selectPlan('Basic')">Choose Plan</button>
+        <div class="hero-buttons">
+          <a href="#plans" class="primary-btn">প্ল্যান দেখুন</a>
+          <a href="#calculator" class="secondary-btn">হিসাব করুন</a>
         </div>
+      </div>
 
-        <div class="card">
-          <h3>Standard</h3>
-          <p>মাসিক রিটার্ন: ৮%</p>
-          <button onclick="selectPlan('Standard')">Choose Plan</button>
+      <div class="hero-card">
+        <div class="card-top">
+          <span>মোট ব্যালেন্স</span>
+          <span>•••</span>
         </div>
+        <h2>৳ ২৫,০০,০০০</h2>
+        <p class="profit">▲ ১২.৮% এই মাসে</p>
 
-        <div class="card">
-          <h3>Premium</h3>
-          <p>মাসিক রিটার্ন: ১২%</p>
-          <button onclick="selectPlan('Premium')">Choose Plan</button>
+        <div class="chart">
+          <div class="bar bar-1"></div>
+          <div class="bar bar-2"></div>
+          <div class="bar bar-3"></div>
+          <div class="bar bar-4"></div>
+          <div class="bar bar-5"></div>
+          <div class="bar bar-6"></div>
+          <div class="bar bar-7"></div>
         </div>
       </div>
     </section>
 
-    <section id="calculator" class="calculator">
-      <h2>Return Calculator</h2>
+    <section class="stats">
+      <div>
+        <h2>১০,০০০+</h2>
+        <p>ডেমো ব্যবহারকারী</p>
+      </div>
+      <div>
+        <h2>৳ ৫০ কোটি+</h2>
+        <p>ডেমো বিনিয়োগ</p>
+      </div>
+      <div>
+        <h2>৯৮%</h2>
+        <p>ব্যবহারকারীর সন্তুষ্টি</p>
+      </div>
+    </section>
 
-      <input type="number" id="amount" placeholder="বিনিয়োগের পরিমাণ">
-      <input type="number" id="rate" placeholder="মাসিক রিটার্ন (%)">
-      <input type="number" id="months" placeholder="সময়, মাসে">
+    <section id="plans" class="section">
+      <div class="section-title">
+        <p class="tag">INVESTMENT PLANS</p>
+        <h2>আপনার জন্য সঠিক প্ল্যান বেছে নিন</h2>
+        <p>নিচের সব তথ্য শুধুমাত্র ডেমো উদ্দেশ্যে ব্যবহার করা হয়েছে।</p>
+      </div>
 
-      <button onclick="calculateReturn()">হিসাব করুন</button>
+      <div class="plans">
+        <div class="plan-card">
+          <h3>Basic</h3>
+          <div class="rate">৫% <small>/ মাস</small></div>
+          <p>শুরু করার জন্য উপযুক্ত</p>
+          <ul>
+            <li>ন্যূনতম ৳১,০০০</li>
+            <li>মাসিক হিসাব</li>
+            <li>সাধারণ রিপোর্ট</li>
+          </ul>
+          <button onclick="choosePlan('Basic')">প্ল্যান বেছে নিন</button>
+        </div>
 
-      <p id="result"></p>
+        <div class="plan-card popular">
+          <div class="popular-label">জনপ্রিয়</div>
+          <h3>Standard</h3>
+          <div class="rate">৮% <small>/ মাস</small></div>
+          <p>নিয়মিত বিনিয়োগকারীদের জন্য</p>
+          <ul>
+            <li>ন্যূনতম ৳৫,০০০</li>
+            <li>মাসিক রিপোর্ট</li>
+            <li>অগ্রাধিকার সাপোর্ট</li>
+          </ul>
+          <button onclick="choosePlan('Standard')">প্ল্যান বেছে নিন</button>
+        </div>
+
+        <div class="plan-card">
+          <h3>Premium</h3>
+          <div class="rate">১২% <small>/ মাস</small></div>
+          <p>বড় বিনিয়োগের জন্য</p>
+          <ul>
+            <li>ন্যূনতম ৳২৫,০০০</li>
+            <li>বিস্তারিত রিপোর্ট</li>
+            <li>প্রিমিয়াম সাপোর্ট</li>
+          </ul>
+          <button onclick="choosePlan('Premium')">প্ল্যান বেছে নিন</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="calculator" class="calculator-section">
+      <div class="section-title">
+        <p class="tag">RETURN CALCULATOR</p>
+        <h2>সম্ভাব্য রিটার্ন হিসাব করুন</h2>
+      </div>
+
+      <div class="calculator-box">
+        <div class="form-area">
+          <label for="amount">বিনিয়োগের পরিমাণ</label>
+          <input type="number" id="amount" placeholder="যেমন: 10000">
+
+          <label for="rate">মাসিক রিটার্ন (%)</label>
+          <input type="number" id="rate" placeholder="যেমন: 8">
+
+          <label for="months">সময়কাল (মাস)</label>
+          <input type="number" id="months" placeholder="যেমন: 12">
+
+          <button class="calculate-btn" onclick="calculateReturn()">
+            হিসাব করুন
+          </button>
+        </div>
+
+        <div class="result-area">
+          <p>আপনার আনুমানিক ফলাফল</p>
+          <h2 id="totalResult">৳ ০.০০</h2>
+
+          <div class="result-row">
+            <span>মূল বিনিয়োগ</span>
+            <strong id="investmentResult">৳ ০.০০</strong>
+          </div>
+
+          <div class="result-row">
+            <span>আনুমানিক লাভ</span>
+            <strong id="profitResult">৳ ০.০০</strong>
+          </div>
+
+          <small>
+            * এটি শুধুমাত্র সাধারণ হিসাব। প্রকৃত রিটার্ন ভিন্ন হতে পারে।
+          </small>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <h2>Smart Invest সম্পর্কে</h2>
+      <p>
+        Smart Invest একটি ডেমো investment dashboard, যা বিনিয়োগের
+        হিসাব ও পরিকল্পনা প্রদর্শনের জন্য তৈরি করা হয়েছে।
+      </p>
     </section>
   </main>
 
   <footer>
     <p>© 2026 Smart Invest. Demo website only.</p>
+    <p>এটি কোনো আর্থিক পরামর্শ বা প্রকৃত বিনিয়োগ সেবা নয়।</p>
   </footer>
+
+  <div id="toast" class="toast"></div>
 
   <script src="script.js"></script>
 </body>
-</html>
+          </html>
