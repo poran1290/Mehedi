@@ -4,441 +4,314 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
+  min-height: 100vh;
+  color: #fff;
   font-family: Arial, "Noto Sans Bengali", sans-serif;
-  color: #172033;
-  background: #f5f8fc;
-  line-height: 1.6;
+  background:
+    radial-gradient(circle at 20% 20%, #504000 0, transparent 25%),
+    radial-gradient(circle at 90% 80%, #503000 0, transparent 25%),
+    linear-gradient(135deg, #080909, #171717 50%, #090909);
 }
 
-.navbar {
-  height: 72px;
-  padding: 0 7%;
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  width: 180px;
+  height: 900px;
+  opacity: .12;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0 35px,
+    #d9a300 36px 48px,
+    transparent 49px 80px
+  );
+  transform: rotate(38deg);
+  pointer-events: none;
+}
+
+body::before {
+  left: -100px;
+  top: -150px;
+}
+
+body::after {
+  right: -100px;
+  bottom: -180px;
+  transform: rotate(-38deg);
+}
+
+.topbar {
+  height: 70px;
+  padding: 0 6%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #ffffff;
-  box-shadow: 0 2px 15px #0000000d;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  background: #090909e8;
+  border-bottom: 1px solid #353535;
+  position: relative;
+  z-index: 2;
 }
 
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-  color: #075e54;
+.brand {
+  color: #ffe000;
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-shadow: 0 0 14px #ffd00088;
 }
 
-.logo span {
-  color: #12a078;
-}
-
-nav {
+.top-actions {
   display: flex;
-  gap: 28px;
+  align-items: center;
+  gap: 14px;
+  color: #ddd;
+  font-size: 13px;
 }
 
-nav a {
-  color: #172033;
-  text-decoration: none;
-  font-size: 15px;
+.top-actions button,
+.top-actions span {
+  padding: 8px 12px;
+  color: #eee;
+  background: #202020;
+  border: 1px solid #444;
+  border-radius: 20px;
 }
 
-nav a:hover {
-  color: #079669;
-}
-
-.menu-btn {
-  display: none;
-  border: 0;
-  background: transparent;
-  font-size: 25px;
+.top-actions button {
   cursor: pointer;
 }
 
-.hero {
-  padding: 90px 7%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 45px;
-  background: linear-gradient(135deg, #e9fff7, #f5f8fc);
+main {
+  max-width: 480px;
+  margin: auto;
+  padding: 35px 18px 25px;
+  position: relative;
+  z-index: 1;
 }
 
-.hero-content {
-  max-width: 600px;
-}
-
-.tag {
-  color: #079669;
-  font-size: 13px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  margin-bottom: 12px;
-}
-
-.hero h1 {
-  font-size: 48px;
-  line-height: 1.2;
-  margin-bottom: 20px;
-}
-
-.hero h1 span {
-  color: #079669;
-}
-
-.hero p {
-  color: #647083;
+.welcome {
+  text-align: center;
   margin-bottom: 25px;
 }
 
-.hero-buttons {
-  display: flex;
-  gap: 12px;
+.lightning {
+  color: #ffdd00;
+  font-size: 25px;
 }
 
-.primary-btn,
-.secondary-btn,
-button {
-  display: inline-block;
-  padding: 12px 22px;
-  border-radius: 7px;
-  border: 0;
-  cursor: pointer;
-  font-size: 15px;
-  text-decoration: none;
+.welcome h1 {
+  color: #ffdf00;
+  font-size: 58px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-shadow: 0 0 20px #ffd00080;
 }
 
-.primary-btn,
-.plan-card button,
-.calculate-btn {
-  color: white;
-  background: #087f5b;
+.welcome p {
+  color: #aaa;
+  font-size: 13px;
 }
 
-.primary-btn:hover,
-.plan-card button:hover,
-.calculate-btn:hover {
-  background: #056448;
-}
-
-.secondary-btn {
-  color: #087f5b;
-  background: white;
-  border: 1px solid #087f5b;
-}
-
-.hero-card {
-  width: 340px;
-  padding: 28px;
-  color: white;
+.auth-box {
+  padding: 23px 20px;
+  background: #151515ee;
+  border: 1px solid #3d3d3d;
   border-radius: 18px;
-  background: linear-gradient(145deg, #075e54, #12a078);
-  box-shadow: 0 15px 35px #075e544d;
+  box-shadow: 0 12px 35px #000b;
+  backdrop-filter: blur(8px);
 }
 
-.card-top,
-.result-row {
+.tabs {
   display: flex;
-  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 22px;
+  padding: 5px;
+  background: #0c0c0c;
+  border-radius: 10px;
 }
 
-.hero-card h2 {
-  font-size: 32px;
-  margin: 20px 0 5px;
-}
-
-.profit {
-  color: #b8ffe4 !important;
-}
-
-.chart {
-  height: 120px;
-  margin-top: 25px;
-  display: flex;
-  align-items: end;
-  gap: 12px;
-}
-
-.bar {
+.tabs button {
   flex: 1;
-  border-radius: 5px 5px 0 0;
-  background: #b8ffe4;
-}
-
-.bar-1 { height: 35%; }
-.bar-2 { height: 48%; }
-.bar-3 { height: 42%; }
-.bar-4 { height: 65%; }
-.bar-5 { height: 58%; }
-.bar-6 { height: 80%; }
-.bar-7 { height: 100%; }
-
-.stats {
-  padding: 28px 7%;
-  display: flex;
-  justify-content: space-around;
-  text-align: center;
-  background: white;
-}
-
-.stats h2 {
-  color: #087f5b;
-}
-
-.stats p {
-  color: #647083;
-}
-
-.section,
-.calculator-section {
-  padding: 80px 7%;
-}
-
-.section-title {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.section-title h2 {
-  font-size: 32px;
-  margin-bottom: 8px;
-}
-
-.section-title > p:last-child {
-  color: #647083;
-}
-
-.plans {
-  display: flex;
-  justify-content: center;
-  gap: 22px;
-  flex-wrap: wrap;
-}
-
-.plan-card {
-  width: 300px;
-  padding: 30px 25px;
-  position: relative;
-  background: white;
-  border-radius: 14px;
-  box-shadow: 0 5px 20px #0000000d;
-}
-
-.plan-card h3 {
-  font-size: 23px;
-}
-
-.rate {
-  margin: 12px 0;
-  color: #087f5b;
-  font-size: 36px;
+  padding: 11px;
+  color: #999;
+  background: transparent;
+  border: 0;
+  border-radius: 7px;
+  cursor: pointer;
   font-weight: bold;
 }
 
-.rate small {
-  color: #647083;
-  font-size: 14px;
-  font-weight: normal;
+.tabs button.active {
+  color: #171717;
+  background: linear-gradient(90deg, #ffd21a, #b66a00);
 }
 
-.plan-card p {
-  color: #647083;
-}
-
-.plan-card ul {
-  margin: 20px 0;
-  list-style: none;
-}
-
-.plan-card li {
-  padding: 7px 0;
-  color: #475569;
-}
-
-.plan-card li::before {
-  content: "✓";
-  color: #079669;
-  font-weight: bold;
-  margin-right: 8px;
-}
-
-.plan-card button {
-  width: 100%;
-}
-
-.popular {
-  border: 2px solid #079669;
-}
-
-.popular-label {
-  position: absolute;
-  top: -14px;
-  right: 20px;
-  padding: 4px 12px;
-  color: white;
-  background: #079669;
-  border-radius: 15px;
+form label {
+  display: block;
+  margin: 13px 0 6px;
+  color: #f1d879;
   font-size: 12px;
 }
 
-.calculator-section {
-  background: #e9fff7;
+input {
+  width: 100%;
+  padding: 13px 14px;
+  color: #fff;
+  background: #222;
+  border: 1px solid #3b3b3b;
+  border-radius: 9px;
+  outline: none;
+  font-size: 13px;
 }
 
-.calculator-box {
-  max-width: 850px;
-  margin: auto;
-  padding: 32px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 35px;
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 5px 20px #0000000d;
+input:focus {
+  border-color: #e8ac00;
+  box-shadow: 0 0 8px #d99d0038;
 }
 
-.form-area label {
-  display: block;
-  margin: 12px 0 5px;
+.phone-input {
+  display: flex;
+  overflow: hidden;
+  background: #222;
+  border: 1px solid #3b3b3b;
+  border-radius: 9px;
+}
+
+.phone-input span {
+  display: flex;
+  align-items: center;
+  padding: 0 11px;
+  color: #ddd;
+  background: #292929;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.phone-input input {
+  border: 0;
+  border-radius: 0;
+}
+
+.password-box {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: #222;
+  border: 1px solid #3b3b3b;
+  border-radius: 9px;
+}
+
+.password-box input {
+  border: 0;
+  border-radius: 0;
+}
+
+.password-box button {
+  padding: 10px;
+  color: #aaa;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.forgot {
+  margin: 12px 0 18px;
+  text-align: right;
+}
+
+a {
+  color: #ffcc25;
+  text-decoration: none;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  color: #171717;
+  background: linear-gradient(90deg, #ffc51b, #bd6800);
+  border: 0;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 14px;
   font-weight: bold;
+  box-shadow: 0 5px 15px #b66a0055;
 }
 
-.form-area input {
-  width: 100%;
-  padding: 13px;
-  border: 1px solid #d1d9e3;
-  border-radius: 7px;
-  font-size: 15px;
+.submit-btn:hover {
+  filter: brightness(1.15);
 }
 
-.calculate-btn {
-  width: 100%;
-  margin-top: 20px;
-}
-
-.result-area {
-  padding: 25px;
-  border-radius: 12px;
-  color: white;
-  background: #075e54;
-}
-
-.result-area h2 {
-  margin: 12px 0 25px;
-  font-size: 32px;
-  color: #b8ffe4;
-}
-
-.result-row {
-  padding: 13px 0;
-  border-bottom: 1px solid #ffffff33;
-}
-
-.result-area small {
-  display: block;
-  margin-top: 20px;
-  color: #c5eee1;
-}
-
-.about {
-  padding: 65px 7%;
+.switch-text {
+  margin-top: 18px;
+  color: #999;
   text-align: center;
+  font-size: 12px;
 }
 
-.about p {
-  max-width: 650px;
-  margin: 10px auto;
-  color: #647083;
+.check {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  color: #aaa !important;
+}
+
+.check input {
+  width: auto;
+  accent-color: #e5a900;
+}
+
+small {
+  color: #888;
+}
+
+.hidden {
+  display: none;
+}
+
+.notice {
+  margin: 18px 0;
+  color: #777;
+  text-align: center;
+  font-size: 11px;
 }
 
 footer {
-  padding: 25px;
+  padding: 18px;
+  color: #777;
   text-align: center;
-  color: white;
-  background: #172033;
-  font-size: 14px;
+  font-size: 11px;
+  border-top: 1px solid #222;
 }
 
-.toast {
+#toast {
   position: fixed;
-  right: 20px;
-  bottom: 20px;
-  padding: 14px 20px;
-  color: white;
-  background: #087f5b;
+  left: 50%;
+  bottom: 25px;
+  padding: 13px 20px;
+  color: #171717;
+  background: #ffd21a;
   border-radius: 8px;
-  transform: translateY(100px);
-  transition: 0.3s;
+  transform: translate(-50%, 100px);
+  transition: .3s;
+  z-index: 5;
 }
 
-.toast.show {
-  transform: translateY(0);
+#toast.show {
+  transform: translate(-50%, 0);
 }
 
-@media (max-width: 700px) {
-  nav {
-    display: none;
-    position: absolute;
-    top: 72px;
-    left: 0;
-    width: 100%;
-    padding: 20px;
-    flex-direction: column;
-    gap: 15px;
-    background: white;
+@media (max-width: 400px) {
+  .topbar {
+    padding: 0 20px;
   }
 
-  nav.active {
-    display: flex;
+  .welcome h1 {
+    font-size: 48px;
   }
 
-  .menu-btn {
-    display: block;
+  .auth-box {
+    padding: 18px 15px;
   }
-
-  .hero {
-    padding: 60px 6%;
-    flex-direction: column;
-  }
-
-  .hero h1 {
-    font-size: 36px;
-  }
-
-  .hero-card {
-    width: 100%;
-  }
-
-  .stats {
-    padding: 25px 5%;
-    gap: 15px;
-  }
-
-  .stats h2 {
-    font-size: 20px;
-  }
-
-  .stats p {
-    font-size: 12px;
-  }
-
-  .section,
-  .calculator-section {
-    padding: 55px 6%;
-  }
-
-  .section-title h2 {
-    font-size: 26px;
-  }
-
-  .calculator-box {
-    grid-template-columns: 1fr;
-    padding: 20px;
-  }
-  }
+}
