@@ -1,9 +1,7 @@
 "use strict";
 
 
-/* =====================================================
-   ELEMENTS
-===================================================== */
+/* ================= ELEMENTS ================= */
 
 const loginForm = document.getElementById("loginForm");
 const registerForm = document.getElementById("registerForm");
@@ -45,13 +43,8 @@ const passwordHint =
 const strengthBars =
   document.querySelectorAll(".strength-bars span");
 
-const toast =
-  document.getElementById("toast");
 
-
-/* =====================================================
-   VARIABLES
-===================================================== */
+/* ================= STATE ================= */
 
 let language =
   localStorage.getItem("rcn-language") || "bn";
@@ -59,9 +52,7 @@ let language =
 let toastTimer = null;
 
 
-/* =====================================================
-   TRANSLATIONS
-===================================================== */
+/* ================= TRANSLATIONS ================= */
 
 const text = {
 
@@ -309,42 +300,27 @@ const text = {
 };
 
 
-/* =====================================================
-   TRANSLATE
-===================================================== */
+/* ================= TRANSLATE ================= */
 
 function translate(key) {
 
-  if (
-    text[language] &&
-    text[language][key]
-  ) {
-    return text[language][key];
-  }
+  return text[language][key] || key;
 
-  return key;
 }
 
 
-/* =====================================================
-   APPLY LANGUAGE
-===================================================== */
+/* ================= APPLY LANGUAGE ================= */
 
 function applyLanguage() {
 
-  document.documentElement.lang =
-    language === "bn" ? "bn" : "en";
-
+  document.documentElement.lang = language;
 
   document
     .querySelectorAll("[data-i18n]")
     .forEach((element) => {
 
-      const key =
-        element.dataset.i18n;
-
       element.textContent =
-        translate(key);
+        translate(element.dataset.i18n);
 
     });
 
@@ -360,9 +336,7 @@ function applyLanguage() {
 }
 
 
-/* =====================================================
-   LANGUAGE TOGGLE
-===================================================== */
+/* ================= LANGUAGE ================= */
 
 function toggleLanguage() {
 
@@ -371,21 +345,17 @@ function toggleLanguage() {
       ? "en"
       : "bn";
 
-
   localStorage.setItem(
     "rcn-language",
     language
   );
-
 
   applyLanguage();
 
 }
 
 
-/* =====================================================
-   SHOW LOGIN
-===================================================== */
+/* ================= FORM SWITCH ================= */
 
 function showLogin() {
 
@@ -393,20 +363,14 @@ function showLogin() {
 
   registerForm.classList.add("hidden");
 
-
   loginTab.classList.add("active");
 
   registerTab.classList.remove("active");
-
 
   clearMessage();
 
 }
 
-
-/* =====================================================
-   SHOW REGISTER
-===================================================== */
 
 function showRegister() {
 
@@ -414,49 +378,20 @@ function showRegister() {
 
   registerForm.classList.remove("hidden");
 
-
   loginTab.classList.remove("active");
 
   registerTab.classList.add("active");
-
 
   clearMessage();
 
 }
 
 
-/* =====================================================
-   TOAST
-===================================================== */
-
-function showToast(message) {
-
-  clearTimeout(toastTimer);
-
-
-  toast.textContent = message;
-
-  toast.classList.add("show");
-
-
-  toastTimer =
-    setTimeout(() => {
-
-      toast.classList.remove("show");
-
-    }, 2600);
-
-}
-
-
-/* =====================================================
-   FORM MESSAGE
-===================================================== */
+/* ================= MESSAGE ================= */
 
 function showMessage(message) {
 
-  formMessage.textContent =
-    message;
+  formMessage.textContent = message;
 
   formMessage.className =
     "form-message show";
@@ -474,28 +409,44 @@ function clearMessage() {
 }
 
 
-/* =====================================================
-   ERROR
-===================================================== */
+/* ================= TOAST ================= */
+
+function showToast(message) {
+
+  const toast =
+    document.getElementById("toast");
+
+  clearTimeout(toastTimer);
+
+  toast.textContent = message;
+
+  toast.classList.add("show");
+
+  toastTimer = setTimeout(() => {
+
+    toast.classList.remove("show");
+
+  }, 2600);
+
+}
+
+
+/* ================= ERROR ================= */
 
 function showError(input, message) {
 
   const group =
     input.closest(".form-group");
 
-
   input.classList.add("invalid");
-
 
   if (group) {
 
     const error =
       group.querySelector(".error-message");
 
-
     if (error) {
-      error.textContent =
-        message;
+      error.textContent = message;
     }
 
   }
@@ -508,15 +459,12 @@ function clearError(input) {
   const group =
     input.closest(".form-group");
 
-
   input.classList.remove("invalid");
-
 
   if (group) {
 
     const error =
       group.querySelector(".error-message");
-
 
     if (error) {
       error.textContent = "";
@@ -527,78 +475,46 @@ function clearError(input) {
 }
 
 
-/* =====================================================
-   PHONE VALIDATION
-===================================================== */
+/* ================= PHONE ================= */
 
 function validPhone(phone) {
 
-  return /^01[3-9]\d{8}$/.test(phone);
+  return /^01[3-9][0-9]{8}$/.test(phone);
 
 }
 
 
-/* =====================================================
-   PASSWORD SCORE
-===================================================== */
+/* ================= PASSWORD ================= */
 
 function passwordScore(password) {
 
   let score = 0;
 
-
   if (password.length >= 8) {
     score++;
   }
-
-
-  if (/[a-z]/.test(password)) {
-    score++;
-  }
-
 
   if (/[A-Z]/.test(password)) {
     score++;
   }
 
-
   if (/[0-9]/.test(password)) {
     score++;
   }
 
-
   if (/[^A-Za-z0-9]/.test(password)) {
     score++;
   }
-
-
-  if (score > 4) {
-    score = 4;
-  }
-
 
   return score;
 
 }
 
 
-/* =====================================================
-   PASSWORD STRENGTH
-===================================================== */
-
 function updatePasswordStrength() {
 
-  if (!registerPassword) {
-    return;
-  }
-
-
-  const password =
-    registerPassword.value;
-
-
   const score =
-    passwordScore(password);
+    passwordScore(registerPassword.value);
 
 
   const labels = [
@@ -616,36 +532,27 @@ function updatePasswordStrength() {
   ];
 
 
-  strengthBars.forEach(
-    (bar, index) => {
+  strengthBars.forEach((bar, index) => {
 
-      bar.classList.toggle(
-        "active",
-        index < score
-      );
+    bar.classList.toggle(
+      "active",
+      index < score
+    );
 
-    }
-  );
+  });
 
 
   passwordHint.textContent =
-    password
+    registerPassword.value
       ? labels[score]
       : "";
 
 }
 
 
-/* =====================================================
-   LOADING
-===================================================== */
+/* ================= LOADING ================= */
 
 function setLoading(button, status) {
-
-  if (!button) {
-    return;
-  }
-
 
   button.classList.toggle(
     "loading",
@@ -655,9 +562,7 @@ function setLoading(button, status) {
 }
 
 
-/* =====================================================
-   LOGIN VALIDATION
-===================================================== */
+/* ================= LOGIN VALIDATION ================= */
 
 function validateLogin() {
 
@@ -708,9 +613,7 @@ function validateLogin() {
 }
 
 
-/* =====================================================
-   REGISTER VALIDATION
-===================================================== */
+/* ================= REGISTER VALIDATION ================= */
 
 function validateRegister() {
 
@@ -733,8 +636,6 @@ function validateRegister() {
   let valid = true;
 
 
-  /* Name */
-
   if (name.value.trim().length < 2) {
 
     showError(
@@ -750,8 +651,6 @@ function validateRegister() {
 
   }
 
-
-  /* Phone */
 
   if (!validPhone(phone.value.trim())) {
 
@@ -769,8 +668,6 @@ function validateRegister() {
   }
 
 
-  /* Password */
-
   if (passwordScore(password.value) < 3) {
 
     showError(
@@ -786,8 +683,6 @@ function validateRegister() {
 
   }
 
-
-  /* Confirm Password */
 
   if (
     !confirmPassword.value ||
@@ -808,8 +703,6 @@ function validateRegister() {
   }
 
 
-  /* Terms */
-
   if (!terms.checked) {
 
     showMessage(
@@ -826,9 +719,7 @@ function validateRegister() {
 }
 
 
-/* =====================================================
-   DEMO SUBMIT
-===================================================== */
+/* ================= DEMO SUBMIT ================= */
 
 function simulateSubmit(
   button,
@@ -855,19 +746,13 @@ function simulateSubmit(
 }
 
 
-/* =====================================================
-   LANGUAGE
-===================================================== */
+/* ================= EVENTS ================= */
 
 languageBtn.addEventListener(
   "click",
   toggleLanguage
 );
 
-
-/* =====================================================
-   TABS
-===================================================== */
 
 loginTab.addEventListener(
   "click",
@@ -881,9 +766,7 @@ registerTab.addEventListener(
 );
 
 
-/* =====================================================
-   SWITCH BUTTONS
-===================================================== */
+/* ================= SWITCH BUTTONS ================= */
 
 document
   .querySelectorAll("[data-switch]")
@@ -893,11 +776,9 @@ document
       "click",
       () => {
 
-        const target =
-          button.dataset.switch;
-
-
-        if (target === "login") {
+        if (
+          button.dataset.switch === "login"
+        ) {
 
           showLogin();
 
@@ -913,9 +794,7 @@ document
   });
 
 
-/* =====================================================
-   PASSWORD SHOW/HIDE
-===================================================== */
+/* ================= PASSWORD SHOW/HIDE ================= */
 
 document
   .querySelectorAll(".password-button")
@@ -931,11 +810,6 @@ document
           );
 
 
-        if (!input) {
-          return;
-        }
-
-
         if (input.type === "password") {
 
           input.type = "text";
@@ -946,7 +820,7 @@ document
 
           input.type = "password";
 
-          button.textContent = "👁️";
+          button.textContent = "👁";
 
         }
 
@@ -956,9 +830,7 @@ document
   });
 
 
-/* =====================================================
-   PASSWORD INPUT
-===================================================== */
+/* ================= PASSWORD STRENGTH ================= */
 
 registerPassword.addEventListener(
   "input",
@@ -966,9 +838,7 @@ registerPassword.addEventListener(
 );
 
 
-/* =====================================================
-   LOGIN
-===================================================== */
+/* ================= LOGIN ================= */
 
 loginForm.addEventListener(
   "submit",
@@ -999,9 +869,7 @@ loginForm.addEventListener(
 );
 
 
-/* =====================================================
-   REGISTER
-===================================================== */
+/* ================= REGISTER ================= */
 
 registerForm.addEventListener(
   "submit",
@@ -1039,9 +907,7 @@ registerForm.addEventListener(
 );
 
 
-/* =====================================================
-   FORGOT PASSWORD OPEN
-===================================================== */
+/* ================= FORGOT PASSWORD ================= */
 
 forgotButton.addEventListener(
   "click",
@@ -1049,24 +915,13 @@ forgotButton.addEventListener(
 
     forgotModal.classList.add("show");
 
-
-    const phone =
-      document.getElementById(
-        "recoveryPhone"
-      );
-
-
-    setTimeout(() => {
-      phone.focus();
-    }, 100);
+    document
+      .getElementById("recoveryPhone")
+      .focus();
 
   }
 );
 
-
-/* =====================================================
-   CLOSE MODAL
-===================================================== */
 
 function closeModal() {
 
@@ -1074,21 +929,12 @@ function closeModal() {
 
   recoveryForm.reset();
 
-
-  const error =
-    document.getElementById(
-      "recoveryError"
-    );
-
-
-  error.textContent = "";
+  document
+    .getElementById("recoveryError")
+    .textContent = "";
 
 }
 
-
-/* =====================================================
-   MODAL CLOSE
-===================================================== */
 
 modalClose.addEventListener(
   "click",
@@ -1096,17 +942,11 @@ modalClose.addEventListener(
 );
 
 
-/* =====================================================
-   MODAL BACKGROUND CLICK
-===================================================== */
-
 forgotModal.addEventListener(
   "click",
   (event) => {
 
-    if (
-      event.target === forgotModal
-    ) {
+    if (event.target === forgotModal) {
 
       closeModal();
 
@@ -1116,9 +956,7 @@ forgotModal.addEventListener(
 );
 
 
-/* =====================================================
-   RECOVERY
-===================================================== */
+/* ================= RECOVERY ================= */
 
 recoveryForm.addEventListener(
   "submit",
@@ -1132,12 +970,10 @@ recoveryForm.addEventListener(
         "recoveryPhone"
       );
 
-
     const error =
       document.getElementById(
         "recoveryError"
       );
-
 
     const button =
       recoveryForm.querySelector(
@@ -1181,9 +1017,7 @@ recoveryForm.addEventListener(
 );
 
 
-/* =====================================================
-   NOTIFICATION OPEN/CLOSE
-===================================================== */
+/* ================= NOTIFICATION ================= */
 
 notificationBtn.addEventListener(
   "click",
@@ -1211,10 +1045,6 @@ notificationClose.addEventListener(
 );
 
 
-/* =====================================================
-   OUTSIDE CLICK
-===================================================== */
-
 document.addEventListener(
   "click",
   (event) => {
@@ -1235,9 +1065,7 @@ document.addEventListener(
 );
 
 
-/* =====================================================
-   ESCAPE KEY
-===================================================== */
+/* ================= ESCAPE ================= */
 
 document.addEventListener(
   "keydown",
@@ -1257,9 +1085,7 @@ document.addEventListener(
 );
 
 
-/* =====================================================
-   CLEAR INPUT ERRORS
-===================================================== */
+/* ================= CLEAR ERRORS ================= */
 
 document
   .querySelectorAll("input")
@@ -1285,35 +1111,6 @@ document
   });
 
 
-/* =====================================================
-   ONLY NUMBERS FOR PHONE
-===================================================== */
-
-document
-  .querySelectorAll(
-    '#loginPhone, #registerPhone, #recoveryPhone'
-  )
-  .forEach((input) => {
-
-    input.addEventListener(
-      "input",
-      () => {
-
-        input.value =
-          input.value
-            .replace(/\D/g, "")
-            .slice(0, 11);
-
-      }
-    );
-
-  });
-
-
-/* =====================================================
-   INITIALIZE
-===================================================== */
+/* ================= START ================= */
 
 applyLanguage();
-
-showLogin();
