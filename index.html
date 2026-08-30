@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#120b26">
   <title>RCN - Smart Investment</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,161 +12,313 @@
 
   <link rel="stylesheet" href="./style.css">
 </head>
-
 <body>
 
+  <div class="bg-orb orb-one"></div>
+  <div class="bg-orb orb-two"></div>
+
   <header class="topbar">
-    <div class="brand">RCN</div>
+    <a class="brand" href="#">RCN<span>.</span></a>
 
     <div class="top-actions">
-      <button type="button">🔔</button>
-      <span>🌐 বাংলা⌄</span>
+      <div class="notification-wrap">
+        <button id="notificationBtn" class="icon-btn" type="button" aria-label="Notifications">
+          🔔
+          <i></i>
+        </button>
+
+        <div id="notificationPanel" class="notification-panel">
+          <div class="panel-title">
+            <strong data-i18n="notifications">নোটিফিকেশন</strong>
+            <button id="closeNotification" type="button">×</button>
+          </div>
+
+          <div class="notification-item">
+            <span class="notification-icon">✨</span>
+            <div>
+              <b data-i18n="welcomeNotification">RCN-এ স্বাগতম</b>
+              <small data-i18n="welcomeNotificationText">
+                আপনার স্মার্ট ইনভেস্টমেন্ট যাত্রা শুরু করুন।
+              </small>
+            </div>
+          </div>
+
+          <div class="notification-item">
+            <span class="notification-icon">🛡️</span>
+            <div>
+              <b data-i18n="secureNotification">নিরাপদ প্ল্যাটফর্ম</b>
+              <small data-i18n="secureNotificationText">
+                আপনার তথ্য সুরক্ষিত রাখুন।
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button id="languageBtn" class="language-btn" type="button">
+        🌐 বাংলা
+      </button>
     </div>
   </header>
 
-  <main>
-    <section class="welcome">
-      <div class="lightning">✦</div>
+  <main class="page-container">
+
+    <section class="hero">
+      <div class="hero-badge">
+        <span>✦</span>
+        <span data-i18n="smartPlatform">স্মার্ট ইনভেস্টমেন্ট প্ল্যাটফর্ম</span>
+      </div>
+
       <h1>RCN</h1>
-      <p>আপনার স্মার্ট ইনভেস্টমেন্ট প্ল্যাটফর্ম</p>
+
+      <p data-i18n="heroText">
+        আপনার অর্থনৈতিক ভবিষ্যৎ পরিকল্পনা করুন আরও স্মার্টভাবে।
+      </p>
+
+      <div class="hero-stats">
+        <div>
+          <strong>24/7</strong>
+          <span data-i18n="support">সাপোর্ট</span>
+        </div>
+        <div>
+          <strong>100%</strong>
+          <span data-i18n="secure">সিকিউর</span>
+        </div>
+        <div>
+          <strong>৳0</strong>
+          <span data-i18n="signupFee">সাইনআপ ফি</span>
+        </div>
+      </div>
     </section>
 
-    <section class="auth-box">
+    <section class="auth-card">
+
+      <div class="card-heading">
+        <span class="heading-icon">🔐</span>
+        <div>
+          <h2 data-i18n="accountAccess">অ্যাকাউন্ট অ্যাক্সেস</h2>
+          <p data-i18n="accountAccessText">
+            আপনার অ্যাকাউন্টে প্রবেশ করুন অথবা নতুন অ্যাকাউন্ট তৈরি করুন।
+          </p>
+        </div>
+      </div>
 
       <div class="tabs">
-        <button id="loginTab" class="active" type="button" onclick="showLogin()">
-          লগইন
+        <button id="loginTab" class="active" type="button" data-tab="login">
+          <span data-i18n="login">লগইন</span>
         </button>
 
-        <button id="registerTab" type="button" onclick="showRegister()">
-          রেজিস্ট্রেশন
+        <button id="registerTab" type="button" data-tab="register">
+          <span data-i18n="register">রেজিস্ট্রেশন</span>
         </button>
       </div>
 
-      <!-- Login Form -->
-      <form id="loginForm">
-        <label for="loginPhone">ফোন নম্বর</label>
+      <div id="formMessage" class="form-message"></div>
 
-        <div class="phone-input">
-          <span>🇧🇩 +880</span>
-          <input
-            id="loginPhone"
-            type="tel"
-            placeholder="আপনার ফোন নম্বর লিখুন"
-            required
-          >
+      <!-- Login Form -->
+      <form id="loginForm" novalidate>
+
+        <div class="field">
+          <label for="loginPhone" data-i18n="phoneNumber">ফোন নম্বর</label>
+
+          <div class="phone-input">
+            <span>🇧🇩 +880</span>
+            <input id="loginPhone"
+                   type="tel"
+                   inputmode="numeric"
+                   maxlength="10"
+                   placeholder="01XXXXXXXXX"
+                   autocomplete="tel">
+          </div>
+
+          <small class="error-text"></small>
         </div>
 
-        <label for="loginPassword">পাসওয়ার্ড</label>
+        <div class="field">
+          <label for="loginPassword" data-i18n="password">পাসওয়ার্ড</label>
 
-        <div class="password-box">
-          <input
-            id="loginPassword"
-            type="password"
-            placeholder="আপনার পাসওয়ার্ড লিখুন"
-            required
-          >
+          <div class="password-input">
+            <input id="loginPassword"
+                   type="password"
+                   placeholder="আপনার পাসওয়ার্ড লিখুন"
+                   autocomplete="current-password">
 
-          <button type="button" onclick="togglePassword('loginPassword', this)">
-            👁
+            <button class="password-toggle" type="button" data-target="loginPassword">
+              👁
+            </button>
+          </div>
+
+          <small class="error-text"></small>
+        </div>
+
+        <div class="form-options">
+          <label class="remember">
+            <input type="checkbox">
+            <span data-i18n="rememberMe">আমাকে মনে রাখুন</span>
+          </label>
+
+          <button id="forgotBtn" class="link-btn" type="button" data-i18n="forgotPassword">
+            পাসওয়ার্ড ভুলে গেছেন?
           </button>
         </div>
 
-        <div class="forgot">
-          <a href="#" onclick="forgotPassword(); return false;">
-            পাসওয়ার্ড ভুলে গেছেন?
-          </a>
-        </div>
-
         <button class="submit-btn" type="submit">
-          লগইন করুন
+          <span class="btn-text" data-i18n="loginButton">লগইন করুন</span>
+          <span class="loader"></span>
         </button>
 
         <p class="switch-text">
-          অ্যাকাউন্ট নেই?
-          <a href="#" onclick="showRegister(); return false;">
+          <span data-i18n="noAccount">অ্যাকাউন্ট নেই?</span>
+          <button type="button" class="inline-btn" data-open-tab="register" data-i18n="registerNow">
             রেজিস্ট্রেশন করুন
-          </a>
+          </button>
         </p>
       </form>
 
       <!-- Registration Form -->
-      <form id="registerForm" class="hidden">
+      <form id="registerForm" class="hidden" novalidate>
 
-        <label for="fullName">আপনার নাম</label>
-        <input
-          id="fullName"
-          type="text"
-          placeholder="আপনার পূর্ণ নাম লিখুন"
-          required
-        >
-
-        <label for="registerPhone">ফোন নম্বর</label>
-
-        <div class="phone-input">
-          <span>🇧🇩 +880</span>
-          <input
-            id="registerPhone"
-            type="tel"
-            placeholder="আপনার ফোন নম্বর লিখুন"
-            required
-          >
+        <div class="field">
+          <label for="fullName" data-i18n="fullName">আপনার পূর্ণ নাম</label>
+          <input id="fullName"
+                 type="text"
+                 placeholder="আপনার পূর্ণ নাম লিখুন"
+                 autocomplete="name">
+          <small class="error-text"></small>
         </div>
 
-        <label for="registerPassword">পাসওয়ার্ড</label>
+        <div class="field">
+          <label for="registerPhone" data-i18n="phoneNumber">ফোন নম্বর</label>
 
-        <div class="password-box">
-          <input
-            id="registerPassword"
-            type="password"
-            placeholder="একটি শক্তিশালী পাসওয়ার্ড দিন"
-            required
-          >
+          <div class="phone-input">
+            <span>🇧🇩 +880</span>
+            <input id="registerPhone"
+                   type="tel"
+                   inputmode="numeric"
+                   maxlength="10"
+                   placeholder="01XXXXXXXXX"
+                   autocomplete="tel">
+          </div>
 
-          <button type="button" onclick="togglePassword('registerPassword', this)">
-            👁
-          </button>
+          <small class="error-text"></small>
         </div>
 
-        <label for="referral">
-          রেফারেল কোড <small>(যদি থাকে)</small>
-        </label>
+        <div class="field">
+          <label for="registerPassword" data-i18n="password">পাসওয়ার্ড</label>
 
-        <input
-          id="referral"
-          type="text"
-          placeholder="রেফারেল কোড লিখুন"
-        >
+          <div class="password-input">
+            <input id="registerPassword"
+                   type="password"
+                   placeholder="একটি শক্তিশালী পাসওয়ার্ড দিন"
+                   autocomplete="new-password">
 
-        <label class="check">
-          <input type="checkbox" required>
-          <span>আমি শর্তাবলিতে সম্মত</span>
+            <button class="password-toggle" type="button" data-target="registerPassword">
+              👁
+            </button>
+          </div>
+
+          <div class="strength-bar">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <small id="passwordHint" class="password-hint"></small>
+          <small class="error-text"></small>
+        </div>
+
+        <div class="field">
+          <label for="confirmPassword" data-i18n="confirmPassword">
+            পাসওয়ার্ড নিশ্চিত করুন
+          </label>
+
+          <div class="password-input">
+            <input id="confirmPassword"
+                   type="password"
+                   placeholder="আবার পাসওয়ার্ড লিখুন"
+                   autocomplete="new-password">
+
+            <button class="password-toggle" type="button" data-target="confirmPassword">
+              👁
+            </button>
+          </div>
+
+          <small class="error-text"></small>
+        </div>
+
+        <div class="field">
+          <label for="referral" data-i18n="referralCode">
+            রেফারেল কোড <em data-i18n="optional">(ঐচ্ছিক)</em>
+          </label>
+
+          <input id="referral"
+                 type="text"
+                 placeholder="রেফারেল কোড লিখুন">
+        </div>
+
+        <label class="terms">
+          <input id="terms" type="checkbox">
+          <span data-i18n="agreeTerms">আমি শর্তাবলিতে সম্মত</span>
         </label>
 
         <button class="submit-btn" type="submit">
-          রেজিস্ট্রেশন করুন
+          <span class="btn-text" data-i18n="createAccount">অ্যাকাউন্ট তৈরি করুন</span>
+          <span class="loader"></span>
         </button>
 
         <p class="switch-text">
-          ইতিমধ্যে অ্যাকাউন্ট আছে?
-          <a href="#" onclick="showLogin(); return false;">
+          <span data-i18n="alreadyAccount">ইতিমধ্যে অ্যাকাউন্ট আছে?</span>
+          <button type="button" class="inline-btn" data-open-tab="login" data-i18n="loginNow">
             লগইন করুন
-          </a>
+          </button>
         </p>
       </form>
-
     </section>
 
-    <p class="notice">
-      RCN একটি ডেমো ইনভেস্টমেন্ট প্ল্যাটফর্ম। বিনিয়োগের আগে সব তথ্য যাচাই করুন।
+    <div class="trust-row">
+      <span>🔒 <span data-i18n="encrypted">সুরক্ষিত সংযোগ</span></span>
+      <span>⚡ <span data-i18n="fastEasy">দ্রুত ও সহজ</span></span>
+      <span>✓ <span data-i18n="verified">ভেরিফায়েড</span></span>
+    </div>
+
+    <p class="notice" data-i18n="notice">
+      RCN একটি ডেমো প্ল্যাটফর্ম। বিনিয়োগের আগে সব তথ্য যাচাই করুন।
     </p>
   </main>
 
   <footer>
-    © 2026 RCN. All rights reserved.
+    © 2026 RCN. <span data-i18n="allRights">All rights reserved.</span>
   </footer>
 
-  <div id="toast"></div>
+  <!-- Forgot Password Modal -->
+  <div id="forgotModal" class="modal-overlay">
+    <div class="modal">
+      <button id="modalClose" class="modal-close" type="button">×</button>
+      <div class="modal-icon">🔑</div>
+
+      <h3 data-i18n="recoverPassword">পাসওয়ার্ড পুনরুদ্ধার</h3>
+      <p data-i18n="recoverText">
+        আপনার ফোন নম্বর দিন। পাসওয়ার্ড পুনরুদ্ধারের নির্দেশনা পাঠানো হবে।
+      </p>
+
+      <form id="recoveryForm">
+        <input id="recoveryPhone"
+               type="tel"
+               maxlength="11"
+               placeholder="01XXXXXXXXX">
+
+        <small id="recoveryError" class="error-text"></small>
+
+        <button class="submit-btn" type="submit">
+          <span data-i18n="sendRequest">রিকোয়েস্ট পাঠান</span>
+          <span class="loader"></span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" role="status"></div>
 
   <script src="./script.js"></script>
 </body>
