@@ -1,6 +1,38 @@
-function toggleMenu() {
-  const nav = document.querySelector("nav");
-  nav.classList.toggle("active");
+const loginForm = document.getElementById("loginForm");
+const registerForm = document.getElementById("registerForm");
+const loginTab = document.getElementById("loginTab");
+const registerTab = document.getElementById("registerTab");
+
+function showLogin() {
+  loginForm.classList.remove("hidden");
+  registerForm.classList.add("hidden");
+
+  loginTab.classList.add("active");
+  registerTab.classList.remove("active");
+
+  return false;
+}
+
+function showRegister() {
+  loginForm.classList.add("hidden");
+  registerForm.classList.remove("hidden");
+
+  loginTab.classList.remove("active");
+  registerTab.classList.add("active");
+
+  return false;
+}
+
+function togglePassword(inputId, button) {
+  const input = document.getElementById(inputId);
+
+  if (input.type === "password") {
+    input.type = "text";
+    button.textContent = "🙈";
+  } else {
+    input.type = "password";
+    button.textContent = "👁";
+  }
 }
 
 function showToast(message) {
@@ -14,50 +46,17 @@ function showToast(message) {
   }, 3000);
 }
 
-function choosePlan(planName) {
-  document.getElementById("calculator").scrollIntoView({
-    behavior: "smooth"
-  });
+loginForm.addEventListener("submit", function(event) {
+  event.preventDefault();
+  showToast("ডেমো লগইন সফল হয়েছে");
+});
 
-  const rates = {
-    Basic: 5,
-    Standard: 8,
-    Premium: 12
-  };
+registerForm.addEventListener("submit", function(event) {
+  event.preventDefault();
+  showToast("ডেমো রেজিস্ট্রেশন সফল হয়েছে");
+  registerForm.reset();
+});
 
-  document.getElementById("rate").value = rates[planName];
-
-  showToast(`${planName} প্ল্যান নির্বাচন করা হয়েছে`);
+function forgotPassword() {
+  showToast("পাসওয়ার্ড পুনরুদ্ধার ফিচার শীঘ্রই আসছে");
 }
-
-function formatMoney(number) {
-  return "৳ " + number.toLocaleString("bn-BD", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  });
-}
-
-function calculateReturn() {
-  const amount = Number(document.getElementById("amount").value);
-  const rate = Number(document.getElementById("rate").value);
-  const months = Number(document.getElementById("months").value);
-
-  if (amount <= 0 || rate < 0 || months <= 0) {
-    showToast("সঠিক তথ্য লিখুন");
-    return;
-  }
-
-  const profit = amount * (rate / 100) * months;
-  const total = amount + profit;
-
-  document.getElementById("investmentResult").textContent =
-    formatMoney(amount);
-
-  document.getElementById("profitResult").textContent =
-    formatMoney(profit);
-
-  document.getElementById("totalResult").textContent =
-    formatMoney(total);
-
-  showToast("হিসাব সফলভাবে সম্পন্ন হয়েছে");
-    }
