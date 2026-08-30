@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Invest</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Smart Invest</h1>
+    <p>আপনার বিনিয়োগ পরিকল্পনা সহজভাবে পরিচালনা করুন</p>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h2>বুদ্ধিমানের মতো বিনিয়োগ করুন</h2>
+      <p>এটি একটি ডেমো investment platform।</p>
+      <a href="#calculator">Return Calculator</a>
+    </section>
+
+    <section class="plans">
+      <h2>Investment Plans</h2>
+
+      <div class="cards">
+        <div class="card">
+          <h3>Basic</h3>
+          <p>মাসিক রিটার্ন: ৫%</p>
+          <button onclick="selectPlan('Basic')">Choose Plan</button>
+        </div>
+
+        <div class="card">
+          <h3>Standard</h3>
+          <p>মাসিক রিটার্ন: ৮%</p>
+          <button onclick="selectPlan('Standard')">Choose Plan</button>
+        </div>
+
+        <div class="card">
+          <h3>Premium</h3>
+          <p>মাসিক রিটার্ন: ১২%</p>
+          <button onclick="selectPlan('Premium')">Choose Plan</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="calculator" class="calculator">
+      <h2>Return Calculator</h2>
+
+      <input type="number" id="amount" placeholder="বিনিয়োগের পরিমাণ">
+      <input type="number" id="rate" placeholder="মাসিক রিটার্ন (%)">
+      <input type="number" id="months" placeholder="সময়, মাসে">
+
+      <button onclick="calculateReturn()">হিসাব করুন</button>
+
+      <p id="result"></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Smart Invest. Demo website only.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
