@@ -9,8 +9,6 @@ function showLogin() {
 
   loginTab.classList.add("active");
   registerTab.classList.remove("active");
-
-  return false;
 }
 
 function showRegister() {
@@ -19,8 +17,6 @@ function showRegister() {
 
   loginTab.classList.remove("active");
   registerTab.classList.add("active");
-
-  return false;
 }
 
 function togglePassword(inputId, button) {
@@ -46,6 +42,10 @@ function showToast(message) {
   }, 3000);
 }
 
+function forgotPassword() {
+  showToast("পাসওয়ার্ড পুনরুদ্ধার ফিচার শীঘ্রই আসছে");
+}
+
 loginForm.addEventListener("submit", function(event) {
   event.preventDefault();
   showToast("ডেমো লগইন সফল হয়েছে");
@@ -56,7 +56,3 @@ registerForm.addEventListener("submit", function(event) {
   showToast("ডেমো রেজিস্ট্রেশন সফল হয়েছে");
   registerForm.reset();
 });
-
-function forgotPassword() {
-  showToast("পাসওয়ার্ড পুনরুদ্ধার ফিচার শীঘ্রই আসছে");
-}
