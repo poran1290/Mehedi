@@ -1,17 +1,45 @@
-"use strict";
+/* =====================================================
+   RCN FRONTEND
+   Login + Registration + Dashboard
+===================================================== */
 
 
 /* ================= ELEMENTS ================= */
 
-const loginForm = document.getElementById("loginForm");
-const registerForm = document.getElementById("registerForm");
+const authSection =
+  document.getElementById("authSection");
 
-const loginTab = document.getElementById("loginTab");
-const registerTab = document.getElementById("registerTab");
+const dashboardSection =
+  document.getElementById("dashboardSection");
 
-const languageBtn = document.getElementById("languageBtn");
+const bottomNav =
+  document.getElementById("bottomNav");
 
-const formMessage = document.getElementById("formMessage");
+const mainFooter =
+  document.getElementById("mainFooter");
+
+
+const loginForm =
+  document.getElementById("loginForm");
+
+const registerForm =
+  document.getElementById("registerForm");
+
+
+const loginTab =
+  document.getElementById("loginTab");
+
+const registerTab =
+  document.getElementById("registerTab");
+
+
+const authMessage =
+  document.getElementById("authMessage");
+
+
+const languageBtn =
+  document.getElementById("languageBtn");
+
 
 const notificationBtn =
   document.getElementById("notificationBtn");
@@ -21,6 +49,7 @@ const notificationPanel =
 
 const notificationClose =
   document.getElementById("notificationClose");
+
 
 const forgotButton =
   document.getElementById("forgotButton");
@@ -34,6 +63,7 @@ const modalClose =
 const recoveryForm =
   document.getElementById("recoveryForm");
 
+
 const registerPassword =
   document.getElementById("registerPassword");
 
@@ -44,104 +74,37 @@ const strengthBars =
   document.querySelectorAll(".strength-bars span");
 
 
-/* ================= STATE ================= */
+const toast =
+  document.getElementById("toast");
 
-let language =
-  localStorage.getItem("rcn-language") || "bn";
 
 let toastTimer = null;
 
 
-/* ================= TRANSLATIONS ================= */
+/* ================= LANGUAGE ================= */
 
-const text = {
+let language =
+  localStorage.getItem("rcn-language") || "bn";
+
+
+const translations = {
 
   bn: {
 
-    notifications: "নোটিফিকেশন",
+    login: "লগইন",
+    register: "রেজিস্ট্রেশন",
 
-    welcome: "RCN-এ স্বাগতম",
+    loginSuccess:
+      "ডেমো লগইন সফল হয়েছে।",
 
-    welcomeText:
-      "আপনার স্মার্ট ইনভেস্টমেন্ট যাত্রা শুরু করুন।",
+    registerSuccess:
+      "রেজিস্ট্রেশন সফল হয়েছে। এখন লগইন করুন।",
 
-    secureAccount:
-      "অ্যাকাউন্ট সুরক্ষিত রাখুন",
-
-    secureText:
-      "সবসময় শক্তিশালী পাসওয়ার্ড ব্যবহার করুন।",
-
-    subtitle:
-      "স্মার্ট ইনভেস্টমেন্ট প্ল্যাটফর্ম",
-
-    accountAccess:
-      "অ্যাকাউন্ট অ্যাক্সেস",
-
-    accountText:
-      "লগইন করুন অথবা নতুন অ্যাকাউন্ট তৈরি করুন",
-
-    login:
-      "লগইন",
-
-    register:
-      "রেজিস্ট্রেশন",
-
-    phone:
-      "ফোন নম্বর",
-
-    password:
-      "পাসওয়ার্ড",
-
-    remember:
-      "আমাকে মনে রাখুন",
-
-    forgot:
-      "পাসওয়ার্ড ভুলে গেছেন?",
-
-    loginButton:
-      "লগইন করুন",
-
-    noAccount:
-      "অ্যাকাউন্ট নেই?",
-
-    registerNow:
-      "রেজিস্ট্রেশন করুন",
-
-    fullName:
-      "আপনার পূর্ণ নাম",
-
-    confirmPassword:
-      "পাসওয়ার্ড নিশ্চিত করুন",
-
-    terms:
-      "আমি শর্তাবলিতে সম্মত",
-
-    createAccount:
-      "অ্যাকাউন্ট তৈরি করুন",
-
-    alreadyAccount:
-      "ইতিমধ্যে অ্যাকাউন্ট আছে?",
-
-    loginNow:
-      "লগইন করুন",
-
-    rights:
-      "সর্বস্বত্ব সংরক্ষিত।",
-
-    recoverTitle:
-      "পাসওয়ার্ড পুনরুদ্ধার",
-
-    recoverText:
-      "আপনার ফোন নম্বর দিন। পুনরুদ্ধারের নির্দেশনা পাঠানো হবে।",
-
-    sendRequest:
-      "রিকোয়েস্ট পাঠান",
+    invalidPhone:
+      "সঠিক ১১ সংখ্যার বাংলাদেশি ফোন নম্বর দিন।",
 
     required:
       "এই ঘরটি পূরণ করুন।",
-
-    invalidPhone:
-      "সঠিক ১১ সংখ্যার ফোন নম্বর দিন।",
 
     weak:
       "দুর্বল পাসওয়ার্ড",
@@ -164,106 +127,31 @@ const text = {
     acceptTerms:
       "শর্তাবলিতে সম্মতি দিন।",
 
-    loginSuccess:
-      "ডেমো লগইন সফল হয়েছে।",
-
-    registerSuccess:
-      "ডেমো রেজিস্ট্রেশন সফল হয়েছে।",
-
     recoverySuccess:
-      "রিকোয়েস্ট গ্রহণ করা হয়েছে।"
+      "রিকোয়েস্ট গ্রহণ করা হয়েছে।",
+
+    copied:
+      "Referral Link কপি হয়েছে।"
 
   },
 
 
   en: {
 
-    notifications:
-      "Notifications",
+    login: "Login",
+    register: "Register",
 
-    welcome:
-      "Welcome to RCN",
+    loginSuccess:
+      "Demo login successful.",
 
-    welcomeText:
-      "Start your smart investment journey.",
+    registerSuccess:
+      "Registration successful. Please login.",
 
-    secureAccount:
-      "Keep your account secure",
-
-    secureText:
-      "Always use a strong password.",
-
-    subtitle:
-      "Smart Investment Platform",
-
-    accountAccess:
-      "Account Access",
-
-    accountText:
-      "Login or create a new account",
-
-    login:
-      "Login",
-
-    register:
-      "Register",
-
-    phone:
-      "Phone Number",
-
-    password:
-      "Password",
-
-    remember:
-      "Remember me",
-
-    forgot:
-      "Forgot password?",
-
-    loginButton:
-      "Login",
-
-    noAccount:
-      "Don't have an account?",
-
-    registerNow:
-      "Register now",
-
-    fullName:
-      "Full Name",
-
-    confirmPassword:
-      "Confirm Password",
-
-    terms:
-      "I agree to the terms",
-
-    createAccount:
-      "Create Account",
-
-    alreadyAccount:
-      "Already have an account?",
-
-    loginNow:
-      "Login now",
-
-    rights:
-      "All rights reserved.",
-
-    recoverTitle:
-      "Recover Password",
-
-    recoverText:
-      "Enter your phone number to receive recovery instructions.",
-
-    sendRequest:
-      "Send Request",
+    invalidPhone:
+      "Enter a valid 11-digit Bangladesh phone number.",
 
     required:
       "This field is required.",
-
-    invalidPhone:
-      "Enter a valid 11-digit phone number.",
 
     weak:
       "Weak password",
@@ -286,59 +174,27 @@ const text = {
     acceptTerms:
       "Please accept the terms.",
 
-    loginSuccess:
-      "Demo login successful.",
-
-    registerSuccess:
-      "Demo registration successful.",
-
     recoverySuccess:
-      "Recovery request received."
+      "Recovery request received.",
+
+    copied:
+      "Referral link copied."
 
   }
 
 };
 
 
-/* ================= TRANSLATE ================= */
+function t(key) {
 
-function translate(key) {
-
-  return text[language][key] || key;
+  return translations[language][key] || key;
 
 }
 
 
-/* ================= APPLY LANGUAGE ================= */
+/* ================= LANGUAGE TOGGLE ================= */
 
-function applyLanguage() {
-
-  document.documentElement.lang = language;
-
-  document
-    .querySelectorAll("[data-i18n]")
-    .forEach((element) => {
-
-      element.textContent =
-        translate(element.dataset.i18n);
-
-    });
-
-
-  languageBtn.textContent =
-    language === "bn"
-      ? "🌐 বাংলা"
-      : "🌐 English";
-
-
-  updatePasswordStrength();
-
-}
-
-
-/* ================= LANGUAGE ================= */
-
-function toggleLanguage() {
+function changeLanguage() {
 
   language =
     language === "bn"
@@ -350,61 +206,33 @@ function toggleLanguage() {
     language
   );
 
-  applyLanguage();
+  languageBtn.textContent =
+    language === "bn"
+      ? "🌐 বাংলা"
+      : "🌐 English";
 
-}
-
-
-/* ================= FORM SWITCH ================= */
-
-function showLogin() {
-
-  loginForm.classList.remove("hidden");
-
-  registerForm.classList.add("hidden");
-
-  loginTab.classList.add("active");
-
-  registerTab.classList.remove("active");
-
-  clearMessage();
-
-}
-
-
-function showRegister() {
-
-  loginForm.classList.add("hidden");
-
-  registerForm.classList.remove("hidden");
-
-  loginTab.classList.remove("active");
-
-  registerTab.classList.add("active");
-
-  clearMessage();
+  updatePasswordStrength();
 
 }
 
 
 /* ================= MESSAGE ================= */
 
-function showMessage(message) {
+function showAuthMessage(message) {
 
-  formMessage.textContent = message;
+  authMessage.textContent =
+    message;
 
-  formMessage.className =
-    "form-message show";
+  authMessage.classList.add("show");
 
 }
 
 
-function clearMessage() {
+function clearAuthMessage() {
 
-  formMessage.textContent = "";
+  authMessage.textContent = "";
 
-  formMessage.className =
-    "form-message";
+  authMessage.classList.remove("show");
 
 }
 
@@ -413,20 +241,19 @@ function clearMessage() {
 
 function showToast(message) {
 
-  const toast =
-    document.getElementById("toast");
-
   clearTimeout(toastTimer);
 
-  toast.textContent = message;
+  toast.textContent =
+    message;
 
   toast.classList.add("show");
 
-  toastTimer = setTimeout(() => {
+  toastTimer =
+    setTimeout(() => {
 
-    toast.classList.remove("show");
+      toast.classList.remove("show");
 
-  }, 2600);
+    }, 2500);
 
 }
 
@@ -443,7 +270,7 @@ function showError(input, message) {
   if (group) {
 
     const error =
-      group.querySelector(".error-message");
+      group.querySelector(".error-text");
 
     if (error) {
       error.textContent = message;
@@ -464,7 +291,7 @@ function clearError(input) {
   if (group) {
 
     const error =
-      group.querySelector(".error-message");
+      group.querySelector(".error-text");
 
     if (error) {
       error.textContent = "";
@@ -477,7 +304,7 @@ function clearError(input) {
 
 /* ================= PHONE ================= */
 
-function validPhone(phone) {
+function isValidPhone(phone) {
 
   return /^01[3-9][0-9]{8}$/.test(phone);
 
@@ -486,7 +313,7 @@ function validPhone(phone) {
 
 /* ================= PASSWORD ================= */
 
-function passwordScore(password) {
+function getPasswordScore(password) {
 
   let score = 0;
 
@@ -513,37 +340,46 @@ function passwordScore(password) {
 
 function updatePasswordStrength() {
 
+  if (!registerPassword) {
+    return;
+  }
+
+  const password =
+    registerPassword.value;
+
   const score =
-    passwordScore(registerPassword.value);
+    getPasswordScore(password);
 
 
   const labels = [
 
     "",
 
-    translate("weak"),
+    t("weak"),
 
-    translate("medium"),
+    t("medium"),
 
-    translate("good"),
+    t("good"),
 
-    translate("strong")
+    t("strong")
 
   ];
 
 
-  strengthBars.forEach((bar, index) => {
+  strengthBars.forEach(
+    (bar, index) => {
 
-    bar.classList.toggle(
-      "active",
-      index < score
-    );
+      bar.classList.toggle(
+        "active",
+        index < score
+      );
 
-  });
+    }
+  );
 
 
   passwordHint.textContent =
-    registerPassword.value
+    password
       ? labels[score]
       : "";
 
@@ -554,6 +390,10 @@ function updatePasswordStrength() {
 
 function setLoading(button, status) {
 
+  if (!button) {
+    return;
+  }
+
   button.classList.toggle(
     "loading",
     status
@@ -562,25 +402,89 @@ function setLoading(button, status) {
 }
 
 
-/* ================= LOGIN VALIDATION ================= */
+/* =====================================================
+   AUTH TABS
+===================================================== */
+
+function showLogin() {
+
+  loginForm.classList.remove(
+    "hidden"
+  );
+
+  registerForm.classList.add(
+    "hidden"
+  );
+
+
+  loginTab.classList.add(
+    "active"
+  );
+
+  registerTab.classList.remove(
+    "active"
+  );
+
+
+  clearAuthMessage();
+
+}
+
+
+function showRegister() {
+
+  loginForm.classList.add(
+    "hidden"
+  );
+
+  registerForm.classList.remove(
+    "hidden"
+  );
+
+
+  loginTab.classList.remove(
+    "active"
+  );
+
+  registerTab.classList.add(
+    "active"
+  );
+
+
+  clearAuthMessage();
+
+}
+
+
+/* =====================================================
+   LOGIN VALIDATION
+===================================================== */
 
 function validateLogin() {
 
   const phone =
-    document.getElementById("loginPhone");
+    document.getElementById(
+      "loginPhone"
+    );
 
   const password =
-    document.getElementById("loginPassword");
+    document.getElementById(
+      "loginPassword"
+    );
 
 
   let valid = true;
 
 
-  if (!validPhone(phone.value.trim())) {
+  if (
+    !isValidPhone(
+      phone.value.trim()
+    )
+  ) {
 
     showError(
       phone,
-      translate("invalidPhone")
+      t("invalidPhone")
     );
 
     valid = false;
@@ -592,11 +496,13 @@ function validateLogin() {
   }
 
 
-  if (!password.value.trim()) {
+  if (
+    !password.value.trim()
+  ) {
 
     showError(
       password,
-      translate("required")
+      t("required")
     );
 
     valid = false;
@@ -613,34 +519,48 @@ function validateLogin() {
 }
 
 
-/* ================= REGISTER VALIDATION ================= */
+/* =====================================================
+   REGISTER VALIDATION
+===================================================== */
 
 function validateRegister() {
 
   const name =
-    document.getElementById("fullName");
+    document.getElementById(
+      "registerName"
+    );
 
   const phone =
-    document.getElementById("registerPhone");
+    document.getElementById(
+      "registerPhone"
+    );
 
   const password =
-    document.getElementById("registerPassword");
+    document.getElementById(
+      "registerPassword"
+    );
 
   const confirmPassword =
-    document.getElementById("confirmPassword");
+    document.getElementById(
+      "confirmPassword"
+    );
 
   const terms =
-    document.getElementById("terms");
+    document.getElementById(
+      "terms"
+    );
 
 
   let valid = true;
 
 
-  if (name.value.trim().length < 2) {
+  if (
+    name.value.trim().length < 2
+  ) {
 
     showError(
       name,
-      translate("required")
+      t("required")
     );
 
     valid = false;
@@ -652,11 +572,15 @@ function validateRegister() {
   }
 
 
-  if (!validPhone(phone.value.trim())) {
+  if (
+    !isValidPhone(
+      phone.value.trim()
+    )
+  ) {
 
     showError(
       phone,
-      translate("invalidPhone")
+      t("invalidPhone")
     );
 
     valid = false;
@@ -668,11 +592,15 @@ function validateRegister() {
   }
 
 
-  if (passwordScore(password.value) < 3) {
+  if (
+    getPasswordScore(
+      password.value
+    ) < 3
+  ) {
 
     showError(
       password,
-      translate("shortPassword")
+      t("shortPassword")
     );
 
     valid = false;
@@ -691,22 +619,24 @@ function validateRegister() {
 
     showError(
       confirmPassword,
-      translate("passwordMismatch")
+      t("passwordMismatch")
     );
 
     valid = false;
 
   } else {
 
-    clearError(confirmPassword);
+    clearError(
+      confirmPassword
+    );
 
   }
 
 
   if (!terms.checked) {
 
-    showMessage(
-      translate("acceptTerms")
+    showAuthMessage(
+      t("acceptTerms")
     );
 
     valid = false;
@@ -719,39 +649,379 @@ function validateRegister() {
 }
 
 
-/* ================= DEMO SUBMIT ================= */
+/* =====================================================
+   SAVE DEMO USER
+===================================================== */
 
-function simulateSubmit(
-  button,
-  message,
-  callback
-) {
+function saveDemoUser() {
 
-  setLoading(button, true);
+  const name =
+    document.getElementById(
+      "registerName"
+    ).value.trim();
+
+  const phone =
+    document.getElementById(
+      "registerPhone"
+    ).value.trim();
+
+  const password =
+    document.getElementById(
+      "registerPassword"
+    ).value;
 
 
-  setTimeout(() => {
+  const user = {
 
-    setLoading(button, false);
+    name: name,
 
-    showToast(message);
+    phone: phone,
+
+    password: password
+
+  };
 
 
-    if (callback) {
-      callback();
-    }
-
-  }, 1000);
+  localStorage.setItem(
+    "rcn-user",
+    JSON.stringify(user)
+  );
 
 }
 
 
-/* ================= EVENTS ================= */
+/* =====================================================
+   SHOW DASHBOARD
+===================================================== */
 
-languageBtn.addEventListener(
-  "click",
-  toggleLanguage
+function openDashboard() {
+
+  const userData =
+    localStorage.getItem(
+      "rcn-user"
+    );
+
+
+  let user = {
+
+    name: "RCN User",
+
+    phone: "01XXXXXXXXX"
+
+  };
+
+
+  if (userData) {
+
+    try {
+
+      const saved =
+        JSON.parse(userData);
+
+      user.name =
+        saved.name || user.name;
+
+      user.phone =
+        saved.phone || user.phone;
+
+    } catch (error) {
+
+      /* Ignore invalid local data */
+
+    }
+
+  }
+
+
+  document.getElementById(
+    "dashboardName"
+  ).textContent =
+    user.name;
+
+
+  document.getElementById(
+    "profileName"
+  ).textContent =
+    user.name;
+
+
+  document.getElementById(
+    "profilePhone"
+  ).textContent =
+    user.phone;
+
+
+  const initial =
+    user.name
+      .charAt(0)
+      .toUpperCase();
+
+
+  document.getElementById(
+    "profileInitial"
+  ).textContent =
+    initial || "U";
+
+
+  authSection.classList.add(
+    "hidden"
+  );
+
+  dashboardSection.classList.remove(
+    "hidden"
+  );
+
+  bottomNav.classList.remove(
+    "hidden"
+  );
+
+
+  mainFooter.classList.add(
+    "hidden"
+  );
+
+
+  window.scrollTo(
+    0,
+    0
+  );
+
+}
+
+
+/* =====================================================
+   SHOW AUTH
+===================================================== */
+
+function openAuth() {
+
+  dashboardSection.classList.add(
+    "hidden"
+  );
+
+  bottomNav.classList.add(
+    "hidden"
+  );
+
+  mainFooter.classList.remove(
+    "hidden"
+  );
+
+  authSection.classList.remove(
+    "hidden"
+  );
+
+  showLogin();
+
+}
+
+
+/* =====================================================
+   LOGIN SUBMIT
+===================================================== */
+
+loginForm.addEventListener(
+  "submit",
+  function(event) {
+
+    event.preventDefault();
+
+    clearAuthMessage();
+
+
+    if (!validateLogin()) {
+      return;
+    }
+
+
+    const button =
+      loginForm.querySelector(
+        ".main-submit"
+      );
+
+
+    setLoading(
+      button,
+      true
+    );
+
+
+    setTimeout(
+      () => {
+
+        setLoading(
+          button,
+          false
+        );
+
+
+        const phone =
+          document.getElementById(
+            "loginPhone"
+          ).value.trim();
+
+
+        /*
+          Demo login:
+          If no user exists, create
+          a temporary demo user.
+        */
+
+        let savedUser =
+          localStorage.getItem(
+            "rcn-user"
+          );
+
+
+        if (!savedUser) {
+
+          const demoUser = {
+
+            name: "RCN User",
+
+            phone: phone,
+
+            password:
+              document.getElementById(
+                "loginPassword"
+              ).value
+
+          };
+
+
+          localStorage.setItem(
+            "rcn-user",
+            JSON.stringify(demoUser)
+          );
+
+        }
+
+
+        localStorage.setItem(
+          "rcn-logged-in",
+          "true"
+        );
+
+
+        showToast(
+          t("loginSuccess")
+        );
+
+
+        setTimeout(
+          openDashboard,
+          400
+        );
+
+
+      },
+      800
+    );
+
+  }
 );
+
+
+/* =====================================================
+   REGISTER SUBMIT
+===================================================== */
+
+registerForm.addEventListener(
+  "submit",
+  function(event) {
+
+    event.preventDefault();
+
+    clearAuthMessage();
+
+
+    if (!validateRegister()) {
+      return;
+    }
+
+
+    const button =
+      registerForm.querySelector(
+        ".main-submit"
+      );
+
+
+    setLoading(
+      button,
+      true
+    );
+
+
+    setTimeout(
+      () => {
+
+        setLoading(
+          button,
+          false
+        );
+
+
+        saveDemoUser();
+
+
+        registerForm.reset();
+
+        updatePasswordStrength();
+
+
+        showToast(
+          t("registerSuccess")
+        );
+
+
+        setTimeout(
+          showLogin,
+          500
+        );
+
+
+      },
+      900
+    );
+
+  }
+);
+
+
+/* =====================================================
+   SWITCH BUTTONS
+===================================================== */
+
+document
+  .querySelectorAll(
+    "[data-switch]"
+  )
+  .forEach(
+    button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const target =
+            button.dataset.switch;
+
+
+          if (target === "login") {
+
+            showLogin();
+
+          } else {
+
+            showRegister();
+
+          }
+
+        }
+      );
+
+    }
+  );
 
 
 loginTab.addEventListener(
@@ -766,71 +1036,57 @@ registerTab.addEventListener(
 );
 
 
-/* ================= SWITCH BUTTONS ================= */
+/* =====================================================
+   PASSWORD SHOW/HIDE
+===================================================== */
 
 document
-  .querySelectorAll("[data-switch]")
-  .forEach((button) => {
+  .querySelectorAll(
+    ".password-toggle"
+  )
+  .forEach(
+    button => {
 
-    button.addEventListener(
-      "click",
-      () => {
+      button.addEventListener(
+        "click",
+        () => {
 
-        if (
-          button.dataset.switch === "login"
-        ) {
-
-          showLogin();
-
-        } else {
-
-          showRegister();
-
-        }
-
-      }
-    );
-
-  });
+          const target =
+            document.getElementById(
+              button.dataset.target
+            );
 
 
-/* ================= PASSWORD SHOW/HIDE ================= */
+          if (
+            target.type === "password"
+          ) {
 
-document
-  .querySelectorAll(".password-button")
-  .forEach((button) => {
+            target.type =
+              "text";
 
-    button.addEventListener(
-      "click",
-      () => {
+            button.textContent =
+              "🙈";
 
-        const input =
-          document.getElementById(
-            button.dataset.target
-          );
+          } else {
 
+            target.type =
+              "password";
 
-        if (input.type === "password") {
+            button.textContent =
+              "👁";
 
-          input.type = "text";
-
-          button.textContent = "🙈";
-
-        } else {
-
-          input.type = "password";
-
-          button.textContent = "👁";
+          }
 
         }
+      );
 
-      }
-    );
-
-  });
+    }
+  );
 
 
-/* ================= PASSWORD STRENGTH ================= */
+/* =====================================================
+   PASSWORD STRENGTH
+===================================================== */
 
 registerPassword.addEventListener(
   "input",
@@ -838,190 +1094,23 @@ registerPassword.addEventListener(
 );
 
 
-/* ================= LOGIN ================= */
+/* =====================================================
+   LANGUAGE
+===================================================== */
 
-loginForm.addEventListener(
-  "submit",
-  (event) => {
-
-    event.preventDefault();
-
-    clearMessage();
-
-
-    if (!validateLogin()) {
-      return;
-    }
-
-
-    const button =
-      loginForm.querySelector(
-        ".submit-button"
-      );
-
-
-    simulateSubmit(
-      button,
-      translate("loginSuccess")
-    );
-
-  }
-);
-
-
-/* ================= REGISTER ================= */
-
-registerForm.addEventListener(
-  "submit",
-  (event) => {
-
-    event.preventDefault();
-
-    clearMessage();
-
-
-    if (!validateRegister()) {
-      return;
-    }
-
-
-    const button =
-      registerForm.querySelector(
-        ".submit-button"
-      );
-
-
-    simulateSubmit(
-      button,
-      translate("registerSuccess"),
-      () => {
-
-        registerForm.reset();
-
-        updatePasswordStrength();
-
-      }
-    );
-
-  }
-);
-
-
-/* ================= FORGOT PASSWORD ================= */
-
-forgotButton.addEventListener(
+languageBtn.addEventListener(
   "click",
-  () => {
-
-    forgotModal.classList.add("show");
-
-    document
-      .getElementById("recoveryPhone")
-      .focus();
-
-  }
+  changeLanguage
 );
 
 
-function closeModal() {
-
-  forgotModal.classList.remove("show");
-
-  recoveryForm.reset();
-
-  document
-    .getElementById("recoveryError")
-    .textContent = "";
-
-}
-
-
-modalClose.addEventListener(
-  "click",
-  closeModal
-);
-
-
-forgotModal.addEventListener(
-  "click",
-  (event) => {
-
-    if (event.target === forgotModal) {
-
-      closeModal();
-
-    }
-
-  }
-);
-
-
-/* ================= RECOVERY ================= */
-
-recoveryForm.addEventListener(
-  "submit",
-  (event) => {
-
-    event.preventDefault();
-
-
-    const phone =
-      document.getElementById(
-        "recoveryPhone"
-      );
-
-    const error =
-      document.getElementById(
-        "recoveryError"
-      );
-
-    const button =
-      recoveryForm.querySelector(
-        ".submit-button"
-      );
-
-
-    if (!validPhone(phone.value.trim())) {
-
-      phone.classList.add("invalid");
-
-      error.textContent =
-        translate("invalidPhone");
-
-      return;
-
-    }
-
-
-    phone.classList.remove("invalid");
-
-    error.textContent = "";
-
-
-    setLoading(button, true);
-
-
-    setTimeout(() => {
-
-      setLoading(button, false);
-
-      closeModal();
-
-      showToast(
-        translate("recoverySuccess")
-      );
-
-    }, 900);
-
-  }
-);
-
-
-/* ================= NOTIFICATION ================= */
+/* =====================================================
+   NOTIFICATION
+===================================================== */
 
 notificationBtn.addEventListener(
   "click",
-  (event) => {
+  event => {
 
     event.stopPropagation();
 
@@ -1047,11 +1136,11 @@ notificationClose.addEventListener(
 
 document.addEventListener(
   "click",
-  (event) => {
+  event => {
 
     if (
       !event.target.closest(
-        ".notification-area"
+        ".topbar"
       )
     ) {
 
@@ -1065,13 +1154,438 @@ document.addEventListener(
 );
 
 
-/* ================= ESCAPE ================= */
+/* =====================================================
+   FORGOT PASSWORD
+===================================================== */
+
+forgotButton.addEventListener(
+  "click",
+  () => {
+
+    forgotModal.classList.add(
+      "show"
+    );
+
+    document
+      .getElementById(
+        "recoveryPhone"
+      )
+      .focus();
+
+  }
+);
+
+
+function closeModal() {
+
+  forgotModal.classList.remove(
+    "show"
+  );
+
+  recoveryForm.reset();
+
+  document.getElementById(
+    "recoveryError"
+  ).textContent = "";
+
+}
+
+
+modalClose.addEventListener(
+  "click",
+  closeModal
+);
+
+
+forgotModal.addEventListener(
+  "click",
+  event => {
+
+    if (
+      event.target ===
+      forgotModal
+    ) {
+
+      closeModal();
+
+    }
+
+  }
+);
+
+
+recoveryForm.addEventListener(
+  "submit",
+  event => {
+
+    event.preventDefault();
+
+
+    const phone =
+      document.getElementById(
+        "recoveryPhone"
+      );
+
+    const error =
+      document.getElementById(
+        "recoveryError"
+      );
+
+    const button =
+      recoveryForm.querySelector(
+        ".main-submit"
+      );
+
+
+    if (
+      !isValidPhone(
+        phone.value.trim()
+      )
+    ) {
+
+      phone.classList.add(
+        "invalid"
+      );
+
+      error.textContent =
+        t("invalidPhone");
+
+      return;
+
+    }
+
+
+    phone.classList.remove(
+      "invalid"
+    );
+
+    error.textContent =
+      "";
+
+
+    setLoading(
+      button,
+      true
+    );
+
+
+    setTimeout(
+      () => {
+
+        setLoading(
+          button,
+          false
+        );
+
+        closeModal();
+
+        showToast(
+          t("recoverySuccess")
+        );
+
+      },
+      800
+    );
+
+  }
+);
+
+
+/* =====================================================
+   BOTTOM NAVIGATION
+===================================================== */
+
+const navItems =
+  document.querySelectorAll(
+    ".nav-item"
+  );
+
+
+const dashboardPages =
+  document.querySelectorAll(
+    ".dashboard-page"
+  );
+
+
+navItems.forEach(
+  item => {
+
+    item.addEventListener(
+      "click",
+      () => {
+
+        const pageId =
+          item.dataset.page;
+
+
+        navItems.forEach(
+          nav => {
+
+            nav.classList.remove(
+              "active"
+            );
+
+          }
+        );
+
+
+        item.classList.add(
+          "active"
+        );
+
+
+        dashboardPages.forEach(
+          page => {
+
+            page.classList.remove(
+              "active-page"
+            );
+
+          }
+        );
+
+
+        const targetPage =
+          document.getElementById(
+            pageId
+          );
+
+
+        if (targetPage) {
+
+          targetPage.classList.add(
+            "active-page"
+          );
+
+        }
+
+
+        window.scrollTo(
+          0,
+          0
+        );
+
+      }
+    );
+
+  }
+);
+
+
+/* =====================================================
+   DASHBOARD NOTIFICATION
+===================================================== */
+
+const dashboardNotification =
+  document.getElementById(
+    "dashboardNotification"
+  );
+
+
+dashboardNotification.addEventListener(
+  "click",
+  () => {
+
+    showToast(
+      "আপনার নতুন কোনো notification নেই।"
+    );
+
+  }
+);
+
+
+/* =====================================================
+   TASK BUTTONS
+===================================================== */
+
+document
+  .querySelectorAll(
+    ".task-button:not(.done)"
+  )
+  .forEach(
+    button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          button.textContent =
+            "Done";
+
+          button.classList.add(
+            "done"
+          );
+
+
+          const card =
+            button.closest(
+              ".task-card"
+            );
+
+
+          if (card) {
+
+            card.classList.add(
+              "completed"
+            );
+
+          }
+
+
+          showToast(
+            "Task সম্পন্ন হয়েছে।"
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+/* =====================================================
+   VIP BUTTON
+===================================================== */
+
+document
+  .querySelectorAll(
+    ".vip-button"
+  )
+  .forEach(
+    button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          showToast(
+            "VIP প্ল্যানের বিস্তারিত শীঘ্রই আসছে।"
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+/* =====================================================
+   COPY REFERRAL
+===================================================== */
+
+const copyReferral =
+  document.getElementById(
+    "copyReferral"
+  );
+
+
+copyReferral.addEventListener(
+  "click",
+  async () => {
+
+    const input =
+      document.getElementById(
+        "referralLink"
+      );
+
+
+    try {
+
+      await navigator.clipboard.writeText(
+        input.value
+      );
+
+      showToast(
+        t("copied")
+      );
+
+    } catch (error) {
+
+      input.select();
+
+      document.execCommand(
+        "copy"
+      );
+
+      showToast(
+        t("copied")
+      );
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+document
+  .getElementById(
+    "logoutButton"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      localStorage.removeItem(
+        "rcn-logged-in"
+      );
+
+      openAuth();
+
+      showToast(
+        "আপনি Logout করেছেন।"
+      );
+
+    }
+  );
+
+
+/* =====================================================
+   CLEAR INPUT ERROR
+===================================================== */
+
+document
+  .querySelectorAll(
+    "input"
+  )
+  .forEach(
+    input => {
+
+      input.addEventListener(
+        "input",
+        () => {
+
+          if (
+            input.classList.contains(
+              "invalid"
+            )
+          ) {
+
+            clearError(input);
+
+          }
+
+        }
+      );
+
+    }
+  );
+
+
+/* =====================================================
+   ESCAPE
+===================================================== */
 
 document.addEventListener(
   "keydown",
-  (event) => {
+  event => {
 
-    if (event.key === "Escape") {
+    if (
+      event.key === "Escape"
+    ) {
 
       notificationPanel.classList.remove(
         "show"
@@ -1085,32 +1599,43 @@ document.addEventListener(
 );
 
 
-/* ================= CLEAR ERRORS ================= */
+/* =====================================================
+   AUTO LOGIN AFTER REFRESH
+===================================================== */
 
-document
-  .querySelectorAll("input")
-  .forEach((input) => {
+function checkLogin() {
 
-    input.addEventListener(
-      "input",
-      () => {
-
-        if (
-          input.classList.contains(
-            "invalid"
-          )
-        ) {
-
-          clearError(input);
-
-        }
-
-      }
+  const loggedIn =
+    localStorage.getItem(
+      "rcn-logged-in"
     );
 
-  });
+
+  if (
+    loggedIn === "true"
+  ) {
+
+    openDashboard();
+
+  } else {
+
+    openAuth();
+
+  }
+
+}
 
 
-/* ================= START ================= */
+/* =====================================================
+   INITIALIZE
+===================================================== */
 
-applyLanguage();
+languageBtn.textContent =
+  language === "bn"
+    ? "🌐 বাংলা"
+    : "🌐 English";
+
+
+updatePasswordStrength();
+
+checkLogin();
