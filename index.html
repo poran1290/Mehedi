@@ -2,7 +2,10 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0,
+                 maximum-scale=1.0, user-scalable=no">
+
   <meta name="theme-color" content="#0d081a">
 
   <title>RCN - Smart Investment</title>
@@ -10,200 +13,168 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap"
+        rel="stylesheet">
 
   <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
 
-  <div class="background-circle circle-one"></div>
-  <div class="background-circle circle-two"></div>
+  <!-- Background -->
+  <div class="bg-circle bg-circle-one"></div>
+  <div class="bg-circle bg-circle-two"></div>
 
-  <!-- TOP BAR -->
+
+  <!-- ================= TOP BAR ================= -->
+
   <header class="topbar">
 
-    <a href="#" class="brand">
+    <div class="brand">
       RCN<span>.</span>
-    </a>
+    </div>
 
     <div class="top-actions">
 
-      <!-- Notification -->
-      <div class="notification-area">
+      <button
+        id="notificationBtn"
+        class="top-button"
+        type="button"
+        aria-label="Notifications">
+        🔔
+        <span class="notification-dot"></span>
+      </button>
 
-        <button
-          id="notificationBtn"
-          class="icon-button"
-          type="button"
-          aria-label="Notifications"
-        >
-          🔔
-          <span class="notification-dot"></span>
-        </button>
-
-        <div id="notificationPanel" class="notification-panel">
-
-          <div class="notification-header">
-            <strong data-i18n="notifications">
-              নোটিফিকেশন
-            </strong>
-
-            <button
-              id="notificationClose"
-              type="button"
-              aria-label="Close"
-            >
-              ×
-            </button>
-          </div>
-
-          <div class="notification-item">
-
-            <span>✨</span>
-
-            <div>
-              <strong data-i18n="welcome">
-                RCN-এ স্বাগতম
-              </strong>
-
-              <small data-i18n="welcomeText">
-                আপনার স্মার্ট ইনভেস্টমেন্ট যাত্রা শুরু করুন।
-              </small>
-            </div>
-
-          </div>
-
-          <div class="notification-item">
-
-            <span>🛡️</span>
-
-            <div>
-              <strong data-i18n="secureAccount">
-                অ্যাকাউন্ট সুরক্ষিত রাখুন
-              </strong>
-
-              <small data-i18n="secureText">
-                সবসময় শক্তিশালী পাসওয়ার্ড ব্যবহার করুন।
-              </small>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- Language -->
       <button
         id="languageBtn"
         class="language-button"
-        type="button"
-      >
+        type="button">
         🌐 বাংলা
       </button>
+
+    </div>
+
+
+    <!-- Notification -->
+    <div id="notificationPanel" class="notification-panel">
+
+      <div class="notification-title">
+        <strong>নোটিফিকেশন</strong>
+
+        <button
+          id="notificationClose"
+          type="button">
+          ×
+        </button>
+      </div>
+
+      <div class="notification-item">
+        <div class="notification-icon">✨</div>
+
+        <div>
+          <strong>RCN-এ স্বাগতম</strong>
+          <small>
+            আপনার স্মার্ট ইনভেস্টমেন্ট যাত্রা শুরু করুন।
+          </small>
+        </div>
+      </div>
+
+      <div class="notification-item">
+        <div class="notification-icon">🎁</div>
+
+        <div>
+          <strong>নতুন আপডেট</strong>
+          <small>
+            আপনার Dashboard থেকে সব তথ্য দেখতে পারবেন।
+          </small>
+        </div>
+      </div>
 
     </div>
 
   </header>
 
 
-  <!-- MAIN -->
-  <main class="main-content">
+  <!-- ================================================= -->
+  <!--                  AUTH SECTION                     -->
+  <!-- ================================================= -->
 
-    <!-- LOGO -->
-    <section class="logo-section">
+  <main id="authSection" class="auth-section">
+
+    <div class="logo-section">
 
       <div class="logo-star">✦</div>
 
       <h1>RCN</h1>
 
-      <p data-i18n="subtitle">
+      <p>
         স্মার্ট ইনভেস্টমেন্ট প্ল্যাটফর্ম
       </p>
 
-    </section>
+    </div>
 
 
-    <!-- AUTH CARD -->
     <section class="auth-card">
 
-      <!-- CARD TITLE -->
-      <div class="card-title">
+      <div class="card-heading">
 
         <div class="card-icon">
           🔐
         </div>
 
         <div>
+          <h2>অ্যাকাউন্ট অ্যাক্সেস</h2>
 
-          <h2 data-i18n="accountAccess">
-            অ্যাকাউন্ট অ্যাক্সেস
-          </h2>
-
-          <p data-i18n="accountText">
+          <p>
             লগইন করুন অথবা নতুন অ্যাকাউন্ট তৈরি করুন
           </p>
-
         </div>
 
       </div>
 
 
-      <!-- TABS -->
-      <div class="tabs">
+      <!-- Tabs -->
+
+      <div class="auth-tabs">
 
         <button
           id="loginTab"
           class="active"
-          type="button"
-        >
-          <span data-i18n="login">
-            লগইন
-          </span>
+          type="button">
+          লগইন
         </button>
 
         <button
           id="registerTab"
-          type="button"
-        >
-          <span data-i18n="register">
-            রেজিস্ট্রেশন
-          </span>
+          type="button">
+          রেজিস্ট্রেশন
         </button>
 
       </div>
 
 
-      <!-- FORM MESSAGE -->
       <div
-        id="formMessage"
-        class="form-message"
-      ></div>
+        id="authMessage"
+        class="auth-message">
+      </div>
 
 
       <!-- ================= LOGIN ================= -->
 
       <form
         id="loginForm"
-        novalidate
-      >
+        class="auth-form"
+        novalidate>
 
-        <!-- Phone -->
         <div class="form-group">
 
-          <label
-            for="loginPhone"
-            data-i18n="phone"
-          >
+          <label for="loginPhone">
             ফোন নম্বর
           </label>
 
-          <div class="phone-box">
+          <div class="phone-input">
 
-            <span class="country-code">
-              🇧🇩 +880
-            </span>
+            <span>🇧🇩 +880</span>
 
             <input
               id="loginPhone"
@@ -211,62 +182,52 @@
               inputmode="numeric"
               maxlength="11"
               placeholder="01XXXXXXXXX"
-              autocomplete="tel"
-            >
+              autocomplete="tel">
 
           </div>
 
-          <small class="error-message"></small>
+          <small class="error-text"></small>
 
         </div>
 
 
-        <!-- Password -->
         <div class="form-group">
 
-          <label
-            for="loginPassword"
-            data-i18n="password"
-          >
+          <label for="loginPassword">
             পাসওয়ার্ড
           </label>
 
-          <div class="password-box">
+          <div class="password-input">
 
             <input
               id="loginPassword"
               type="password"
               placeholder="আপনার পাসওয়ার্ড লিখুন"
-              autocomplete="current-password"
-            >
+              autocomplete="current-password">
 
             <button
-              class="password-button"
               type="button"
-              data-target="loginPassword"
-              aria-label="Show password"
-            >
+              class="password-toggle"
+              data-target="loginPassword">
               👁
             </button>
 
           </div>
 
-          <small class="error-message"></small>
+          <small class="error-text"></small>
 
         </div>
 
 
-        <!-- Options -->
-        <div class="form-options">
+        <div class="login-options">
 
-          <label class="remember-me">
+          <label class="check-label">
 
             <input
-              type="checkbox"
               id="rememberMe"
-            >
+              type="checkbox">
 
-            <span data-i18n="remember">
+            <span>
               আমাকে মনে রাখুন
             </span>
 
@@ -274,47 +235,35 @@
 
           <button
             id="forgotButton"
-            class="text-button"
-            type="button"
-            data-i18n="forgot"
-          >
+            class="forgot-button"
+            type="button">
             পাসওয়ার্ড ভুলে গেছেন?
           </button>
 
         </div>
 
 
-        <!-- Submit -->
         <button
-          class="submit-button"
-          type="submit"
-        >
+          class="main-submit"
+          type="submit">
 
-          <span
-            class="button-label"
-            data-i18n="loginButton"
-          >
+          <span class="button-text">
             লগইন করুন
           </span>
 
-          <span class="loading-spinner"></span>
+          <span class="spinner"></span>
 
         </button>
 
 
-        <!-- Switch -->
         <p class="switch-text">
 
-          <span data-i18n="noAccount">
-            অ্যাকাউন্ট নেই?
-          </span>
+          অ্যাকাউন্ট নেই?
 
           <button
-            class="switch-button"
             type="button"
-            data-switch="register"
-            data-i18n="registerNow"
-          >
+            class="switch-button"
+            data-switch="register">
             রেজিস্ট্রেশন করুন
           </button>
 
@@ -327,47 +276,35 @@
 
       <form
         id="registerForm"
-        class="hidden"
-        novalidate
-      >
+        class="auth-form hidden"
+        novalidate>
 
-        <!-- Name -->
         <div class="form-group">
 
-          <label
-            for="fullName"
-            data-i18n="fullName"
-          >
+          <label for="registerName">
             আপনার পূর্ণ নাম
           </label>
 
           <input
-            id="fullName"
+            id="registerName"
             type="text"
             placeholder="আপনার পূর্ণ নাম লিখুন"
-            autocomplete="name"
-          >
+            autocomplete="name">
 
-          <small class="error-message"></small>
+          <small class="error-text"></small>
 
         </div>
 
 
-        <!-- Phone -->
         <div class="form-group">
 
-          <label
-            for="registerPhone"
-            data-i18n="phone"
-          >
+          <label for="registerPhone">
             ফোন নম্বর
           </label>
 
-          <div class="phone-box">
+          <div class="phone-input">
 
-            <span class="country-code">
-              🇧🇩 +880
-            </span>
+            <span>🇧🇩 +880</span>
 
             <input
               id="registerPhone"
@@ -375,48 +312,39 @@
               inputmode="numeric"
               maxlength="11"
               placeholder="01XXXXXXXXX"
-              autocomplete="tel"
-            >
+              autocomplete="tel">
 
           </div>
 
-          <small class="error-message"></small>
+          <small class="error-text"></small>
 
         </div>
 
 
-        <!-- Password -->
         <div class="form-group">
 
-          <label
-            for="registerPassword"
-            data-i18n="password"
-          >
+          <label for="registerPassword">
             পাসওয়ার্ড
           </label>
 
-          <div class="password-box">
+          <div class="password-input">
 
             <input
               id="registerPassword"
               type="password"
               placeholder="একটি শক্তিশালী পাসওয়ার্ড দিন"
-              autocomplete="new-password"
-            >
+              autocomplete="new-password">
 
             <button
-              class="password-button"
               type="button"
-              data-target="registerPassword"
-              aria-label="Show password"
-            >
+              class="password-toggle"
+              data-target="registerPassword">
               👁
             </button>
 
           </div>
 
 
-          <!-- Strength -->
           <div class="strength-bars">
 
             <span></span>
@@ -428,95 +356,76 @@
 
           <small
             id="passwordHint"
-            class="password-hint"
-          ></small>
+            class="password-hint">
+          </small>
 
-          <small class="error-message"></small>
+          <small class="error-text"></small>
 
         </div>
 
 
-        <!-- Confirm Password -->
         <div class="form-group">
 
-          <label
-            for="confirmPassword"
-            data-i18n="confirmPassword"
-          >
+          <label for="confirmPassword">
             পাসওয়ার্ড নিশ্চিত করুন
           </label>
 
-          <div class="password-box">
+          <div class="password-input">
 
             <input
               id="confirmPassword"
               type="password"
               placeholder="আবার পাসওয়ার্ড লিখুন"
-              autocomplete="new-password"
-            >
+              autocomplete="new-password">
 
             <button
-              class="password-button"
               type="button"
-              data-target="confirmPassword"
-              aria-label="Show password"
-            >
+              class="password-toggle"
+              data-target="confirmPassword">
               👁
             </button>
 
           </div>
 
-          <small class="error-message"></small>
+          <small class="error-text"></small>
 
         </div>
 
 
-        <!-- Terms -->
-        <label class="terms">
+        <label class="terms-label">
 
           <input
             id="terms"
-            type="checkbox"
-          >
+            type="checkbox">
 
-          <span data-i18n="terms">
+          <span>
             আমি শর্তাবলিতে সম্মত
           </span>
 
         </label>
 
 
-        <!-- Submit -->
         <button
-          class="submit-button"
-          type="submit"
-        >
+          class="main-submit"
+          type="submit">
 
-          <span
-            class="button-label"
-            data-i18n="createAccount"
-          >
+          <span class="button-text">
             অ্যাকাউন্ট তৈরি করুন
           </span>
 
-          <span class="loading-spinner"></span>
+          <span class="spinner"></span>
 
         </button>
 
 
-        <!-- Switch -->
         <p class="switch-text">
 
-          <span data-i18n="alreadyAccount">
-            ইতিমধ্যে অ্যাকাউন্ট আছে?
-          </span>
+          ইতিমধ্যে অ্যাকাউন্ট আছে?
 
           <button
-            class="switch-button"
             type="button"
-            data-switch="login"
-            data-i18n="loginNow"
-          >
+            class="switch-button"
+            data-switch="login">
             লগইন করুন
           </button>
 
@@ -529,29 +438,739 @@
   </main>
 
 
-  <!-- FOOTER -->
-  <footer>
-    © 2026 RCN.
-    <span data-i18n="rights">
-      সর্বস্বত্ব সংরক্ষিত।
-    </span>
-  </footer>
+  <!-- ================================================= -->
+  <!--                 DASHBOARD                         -->
+  <!-- ================================================= -->
+
+  <main
+    id="dashboardSection"
+    class="dashboard hidden">
 
 
-  <!-- FORGOT PASSWORD MODAL -->
+    <!-- Dashboard Header -->
+
+    <section class="dashboard-header">
+
+      <div>
+
+        <p class="welcome-small">
+          স্বাগতম 👋
+        </p>
+
+        <h1 id="dashboardName">
+          RCN User
+        </h1>
+
+      </div>
+
+
+      <button
+        id="dashboardNotification"
+        class="dashboard-bell"
+        type="button">
+        🔔
+      </button>
+
+    </section>
+
+
+    <!-- Balance Card -->
+
+    <section class="balance-card">
+
+      <div class="balance-top">
+
+        <div>
+
+          <p>
+            মোট ব্যালেন্স
+          </p>
+
+          <h2 id="balanceAmount">
+            ৳ 10,000
+          </h2>
+
+        </div>
+
+        <div class="balance-icon">
+          ৳
+        </div>
+
+      </div>
+
+
+      <div class="balance-bottom">
+
+        <div>
+          <span>ইনভেস্টমেন্ট</span>
+          <strong id="investmentAmount">
+            ৳ 5,000
+          </strong>
+        </div>
+
+        <div>
+          <span>আজকের আয়</span>
+          <strong id="todayIncome">
+            ৳ 250
+          </strong>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- Dynamic Content -->
+
+    <section id="dashboardContent">
+
+
+      <!-- ================= HOME ================= -->
+
+      <div
+        id="homePage"
+        class="dashboard-page active-page">
+
+        <div class="section-heading">
+
+          <div>
+            <h2>Home</h2>
+            <p>
+              আপনার অ্যাকাউন্টের সারসংক্ষেপ
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="quick-grid">
+
+          <div class="quick-card">
+
+            <div class="quick-icon">
+              💰
+            </div>
+
+            <span>
+              মোট আয়
+            </span>
+
+            <strong>
+              ৳ 2,500
+            </strong>
+
+          </div>
+
+
+          <div class="quick-card">
+
+            <div class="quick-icon">
+              📈
+            </div>
+
+            <span>
+              ইনভেস্টমেন্ট
+            </span>
+
+            <strong>
+              ৳ 5,000
+            </strong>
+
+          </div>
+
+
+          <div class="quick-card">
+
+            <div class="quick-icon">
+              🎁
+            </div>
+
+            <span>
+              Bonus
+            </span>
+
+            <strong>
+              ৳ 500
+            </strong>
+
+          </div>
+
+
+          <div class="quick-card">
+
+            <div class="quick-icon">
+              👥
+            </div>
+
+            <span>
+              Team
+            </span>
+
+            <strong>
+              12 জন
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="home-card">
+
+          <h3>
+            📊 আজকের কার্যক্রম
+          </h3>
+
+          <div class="activity-row">
+
+            <span>Daily Task</span>
+
+            <strong>3 / 5</strong>
+
+          </div>
+
+          <div class="progress">
+
+            <span style="width:60%"></span>
+
+          </div>
+
+          <p>
+            আজকের ৫টি Task-এর মধ্যে ৩টি সম্পন্ন হয়েছে।
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= TASK ================= -->
+
+      <div
+        id="taskPage"
+        class="dashboard-page">
+
+        <div class="section-heading">
+
+          <div>
+            <h2>Task</h2>
+            <p>
+              আপনার দৈনিক কাজ সম্পন্ন করুন
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="task-card">
+
+          <div class="task-left">
+
+            <div class="task-icon">
+              ▶
+            </div>
+
+            <div>
+
+              <h3>
+                Daily Task #1
+              </h3>
+
+              <p>
+                নির্ধারিত কাজ সম্পন্ন করুন
+              </p>
+
+            </div>
+
+          </div>
+
+          <button
+            class="task-button"
+            type="button">
+            Start
+          </button>
+
+        </div>
+
+
+        <div class="task-card">
+
+          <div class="task-left">
+
+            <div class="task-icon">
+              ⭐
+            </div>
+
+            <div>
+
+              <h3>
+                Daily Task #2
+              </h3>
+
+              <p>
+                আজকের দ্বিতীয় কাজ
+              </p>
+
+            </div>
+
+          </div>
+
+          <button
+            class="task-button"
+            type="button">
+            Start
+          </button>
+
+        </div>
+
+
+        <div class="task-card completed">
+
+          <div class="task-left">
+
+            <div class="task-icon">
+              ✓
+            </div>
+
+            <div>
+
+              <h3>
+                Daily Task #3
+              </h3>
+
+              <p>
+                কাজটি সম্পন্ন হয়েছে
+              </p>
+
+            </div>
+
+          </div>
+
+          <button
+            class="task-button done"
+            type="button">
+            Done
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= VIP ================= -->
+
+      <div
+        id="vipPage"
+        class="dashboard-page">
+
+        <div class="section-heading">
+
+          <div>
+
+            <h2>VIP</h2>
+
+            <p>
+              VIP প্ল্যান দেখুন
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="vip-card vip-basic">
+
+          <div class="vip-header">
+
+            <div>
+              <span>VIP 1</span>
+              <h3>৳ 1,000</h3>
+            </div>
+
+            <div class="vip-crown">
+              👑
+            </div>
+
+          </div>
+
+          <div class="vip-info">
+
+            <div>
+              <span>Daily Income</span>
+              <strong>৳ 50</strong>
+            </div>
+
+            <div>
+              <span>Duration</span>
+              <strong>30 Days</strong>
+            </div>
+
+          </div>
+
+          <button
+            class="vip-button"
+            type="button">
+            প্ল্যান দেখুন
+          </button>
+
+        </div>
+
+
+        <div class="vip-card vip-premium">
+
+          <div class="vip-header">
+
+            <div>
+              <span>VIP 2</span>
+              <h3>৳ 5,000</h3>
+            </div>
+
+            <div class="vip-crown">
+              👑
+            </div>
+
+          </div>
+
+          <div class="vip-info">
+
+            <div>
+              <span>Daily Income</span>
+              <strong>৳ 300</strong>
+            </div>
+
+            <div>
+              <span>Duration</span>
+              <strong>30 Days</strong>
+            </div>
+
+          </div>
+
+          <button
+            class="vip-button"
+            type="button">
+            প্ল্যান দেখুন
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= TEAM ================= -->
+
+      <div
+        id="teamPage"
+        class="dashboard-page">
+
+        <div class="section-heading">
+
+          <div>
+
+            <h2>Team</h2>
+
+            <p>
+              আপনার Referral Team
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="team-summary">
+
+          <div>
+            <span>মোট Team</span>
+            <strong>12</strong>
+          </div>
+
+          <div>
+            <span>Active</span>
+            <strong>8</strong>
+          </div>
+
+          <div>
+            <span>Team Income</span>
+            <strong>৳ 850</strong>
+          </div>
+
+        </div>
+
+
+        <div class="referral-card">
+
+          <p>
+            আপনার Referral Link
+          </p>
+
+          <div class="referral-box">
+
+            <input
+              id="referralLink"
+              type="text"
+              readonly
+              value="https://rcn.example/ref/RCN10001">
+
+            <button
+              id="copyReferral"
+              type="button">
+              Copy
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="team-member">
+
+          <div class="member-avatar">
+            A
+          </div>
+
+          <div class="member-info">
+            <strong>Member 01</strong>
+            <span>Active Member</span>
+          </div>
+
+          <b>৳ 250</b>
+
+        </div>
+
+
+        <div class="team-member">
+
+          <div class="member-avatar">
+            M
+          </div>
+
+          <div class="member-info">
+            <strong>Member 02</strong>
+            <span>Active Member</span>
+          </div>
+
+          <b>৳ 180</b>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= PROFILE ================= -->
+
+      <div
+        id="profilePage"
+        class="dashboard-page">
+
+        <div class="section-heading">
+
+          <div>
+
+            <h2>Profile</h2>
+
+            <p>
+              আপনার অ্যাকাউন্ট
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="profile-card">
+
+          <div class="profile-avatar">
+            <span id="profileInitial">
+              U
+            </span>
+          </div>
+
+          <h3 id="profileName">
+            RCN User
+          </h3>
+
+          <p id="profilePhone">
+            01XXXXXXXXX
+          </p>
+
+        </div>
+
+
+        <div class="profile-menu">
+
+          <button
+            type="button"
+            class="profile-menu-item">
+
+            <span>👤</span>
+
+            <div>
+              <strong>ব্যক্তিগত তথ্য</strong>
+              <small>আপনার তথ্য দেখুন</small>
+            </div>
+
+            <b>›</b>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="profile-menu-item">
+
+            <span>🔐</span>
+
+            <div>
+              <strong>পাসওয়ার্ড</strong>
+              <small>পাসওয়ার্ড পরিবর্তন করুন</small>
+            </div>
+
+            <b>›</b>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="profile-menu-item">
+
+            <span>💳</span>
+
+            <div>
+              <strong>Withdrawal</strong>
+              <small>টাকা উত্তোলন</small>
+            </div>
+
+            <b>›</b>
+
+          </button>
+
+
+          <button
+            id="logoutButton"
+            type="button"
+            class="profile-menu-item logout">
+
+            <span>🚪</span>
+
+            <div>
+              <strong>Logout</strong>
+              <small>অ্যাকাউন্ট থেকে বের হয়ে যান</small>
+            </div>
+
+            <b>›</b>
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ================= BOTTOM NAV ================= -->
+
+  <nav
+    id="bottomNav"
+    class="bottom-nav hidden">
+
+    <button
+      class="nav-item active"
+      data-page="homePage"
+      type="button">
+
+      <span class="nav-icon">
+        🏠
+      </span>
+
+      <span>
+        Home
+      </span>
+
+    </button>
+
+
+    <button
+      class="nav-item"
+      data-page="taskPage"
+      type="button">
+
+      <span class="nav-icon">
+        📋
+      </span>
+
+      <span>
+        Task
+      </span>
+
+    </button>
+
+
+    <button
+      class="nav-item"
+      data-page="vipPage"
+      type="button">
+
+      <span class="nav-icon">
+        👑
+      </span>
+
+      <span>
+        VIP
+      </span>
+
+    </button>
+
+
+    <button
+      class="nav-item"
+      data-page="teamPage"
+      type="button">
+
+      <span class="nav-icon">
+        👥
+      </span>
+
+      <span>
+        Team
+      </span>
+
+    </button>
+
+
+    <button
+      class="nav-item"
+      data-page="profilePage"
+      type="button">
+
+      <span class="nav-icon">
+        👤
+      </span>
+
+      <span>
+        Profile
+      </span>
+
+    </button>
+
+  </nav>
+
+
+  <!-- ================= FORGOT MODAL ================= -->
 
   <div
     id="forgotModal"
-    class="modal-overlay"
-  >
+    class="modal-overlay">
 
     <div class="modal-box">
 
       <button
         id="modalClose"
         class="modal-close"
-        type="button"
-      >
+        type="button">
         ×
       </button>
 
@@ -559,12 +1178,12 @@
         🔑
       </div>
 
-      <h3 data-i18n="recoverTitle">
+      <h3>
         পাসওয়ার্ড পুনরুদ্ধার
       </h3>
 
-      <p data-i18n="recoverText">
-        আপনার ফোন নম্বর দিন। পুনরুদ্ধারের নির্দেশনা পাঠানো হবে।
+      <p>
+        আপনার ফোন নম্বর দিন।
       </p>
 
       <form id="recoveryForm">
@@ -574,27 +1193,22 @@
           type="tel"
           inputmode="numeric"
           maxlength="11"
-          placeholder="01XXXXXXXXX"
-        >
+          placeholder="01XXXXXXXXX">
 
         <small
           id="recoveryError"
-          class="error-message"
-        ></small>
+          class="error-text">
+        </small>
 
         <button
-          class="submit-button"
-          type="submit"
-        >
+          class="main-submit"
+          type="submit">
 
-          <span
-            class="button-label"
-            data-i18n="sendRequest"
-          >
+          <span class="button-text">
             রিকোয়েস্ট পাঠান
           </span>
 
-          <span class="loading-spinner"></span>
+          <span class="spinner"></span>
 
         </button>
 
@@ -605,11 +1219,17 @@
   </div>
 
 
-  <!-- TOAST -->
+  <!-- Toast -->
+
   <div id="toast"></div>
+
+
+  <footer id="mainFooter">
+    © 2026 RCN. সর্বস্বত্ব সংরক্ষিত।
+  </footer>
 
 
   <script src="./script.js"></script>
 
 </body>
-  </html>
+            </html>
